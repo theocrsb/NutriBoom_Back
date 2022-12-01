@@ -7,6 +7,7 @@ import { UsersModule } from './users/users.module';
 import { ActivityModule } from './activity/activity.module';
 import { MealsModule } from './meals/meals.module';
 import { TypesModule } from './types/types.module';
+import { FoodsModule } from './foods/foods.module';
 import * as dotenv from 'dotenv';
 
 dotenv.config({ path: '.env' });
@@ -27,6 +28,7 @@ dotenv.config({ path: '.env' });
     ActivityModule,
     MealsModule,
     TypesModule,
+    FoodsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
