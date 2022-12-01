@@ -9,6 +9,7 @@ import { MealsModule } from './meals/meals.module';
 import { TypesModule } from './types/types.module';
 import { FoodsModule } from './foods/foods.module';
 import * as dotenv from 'dotenv';
+import { User } from './users/entities/user.entity';
 
 dotenv.config({ path: '.env' });
 
@@ -21,7 +22,7 @@ dotenv.config({ path: '.env' });
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [],
+      entities: [User],
       synchronize: process.env.MODE === 'DEV' ? true : false,
     }),
     UsersModule,
