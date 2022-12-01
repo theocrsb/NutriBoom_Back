@@ -31,12 +31,35 @@ export class UsersService {
     //`This action returns a #${id} user`;
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
+    const userUpdate = await this.findOne(id);
+    if (
+      userUpdate.lastname !== undefined ||
+      userUpdate.age !== undefined ||
+      userUpdate.email !== undefined ||
+      userUpdate.gender !== undefined ||
+      userUpdate.height !== undefined ||
+      userUpdate.firstname !== undefined ||
+      userUpdate.password !== undefined ||
+      userUpdate.weight
+    ) {
+      userUpdate.lastname === updateUserDto.lastname ||
+        userUpdate.age === updateUserDto.age ||
+        userUpdate.email === updateUserDto.email ||
+        userUpdate.height === updateUserDto.height ||
+        userUpdate.firstname === updateUserDto.firstname ||
+        userUpdate.password === updateUserDto.password ||
+        userUpdate.weight === updateUserDto.weight;
+    }
+    return await this.userRepository.save(userUpdate);
     //test branch dev
   }
 
-  async remove(id: string) {
-    return `This action removes a #${id} user`;
+  async remove(id: string): Promise<string> {
+    const result = await this.userRepository.delete({ id });
+    if (result.affected === 0) {
+      throw new NotFoundException(`Pas d'utilisateurs avec l'id : ${id}`);
+    }
+    return `Vous venez de supprimer l'utilisateur possédant l'id: ${id}`;
   }
 }
