@@ -52,6 +52,7 @@ export class User {
     nullable: false,
     type: 'varchar',
     length: 100,
+    unique: true,
   })
   email: string;
 
