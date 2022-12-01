@@ -14,12 +14,10 @@ export class UsersService {
   ) {}
   async create(createUserDto: CreateUserDto): Promise<User> {
     return await this.userRepository.save(createUserDto);
-    //'This action adds a new user';
   }
 
   async findAll(): Promise<User[]> {
     return await this.userRepository.find();
-    //`This action returns all users`;
   }
 
   async findOne(id: string): Promise<User> {
@@ -28,31 +26,36 @@ export class UsersService {
       throw new NotFoundException(`Pas d'utilisateurs avec l'id : ${id}`);
     }
     return userFound;
-    //`This action returns a #${id} user`;
   }
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
     const userUpdate = await this.findOne(id);
-    if (
-      userUpdate.lastname !== undefined ||
-      userUpdate.age !== undefined ||
-      userUpdate.email !== undefined ||
-      userUpdate.gender !== undefined ||
-      userUpdate.height !== undefined ||
-      userUpdate.firstname !== undefined ||
-      userUpdate.password !== undefined ||
-      userUpdate.weight
-    ) {
-      userUpdate.lastname === updateUserDto.lastname ||
-        userUpdate.age === updateUserDto.age ||
-        userUpdate.email === updateUserDto.email ||
-        userUpdate.height === updateUserDto.height ||
-        userUpdate.firstname === updateUserDto.firstname ||
-        userUpdate.password === updateUserDto.password ||
-        userUpdate.weight === updateUserDto.weight;
+    if (userUpdate.lastname !== undefined) {
+      userUpdate.lastname = updateUserDto.lastname;
     }
+    if (userUpdate.age !== undefined) {
+      userUpdate.age = updateUserDto.age;
+    }
+    if (userUpdate.email !== undefined) {
+      userUpdate.email = updateUserDto.email;
+    }
+    if (userUpdate.gender !== undefined) {
+      userUpdate.gender = updateUserDto.gender;
+    }
+    if (userUpdate.height !== undefined) {
+      userUpdate.height = updateUserDto.height;
+    }
+    if (userUpdate.firstname !== undefined) {
+      userUpdate.firstname = updateUserDto.firstname;
+    }
+    if (userUpdate.password !== undefined) {
+      userUpdate.password = updateUserDto.password;
+    }
+    if (userUpdate.weight !== undefined) {
+      userUpdate.weight = updateUserDto.weight;
+    }
+
     return await this.userRepository.save(userUpdate);
-    //test branch dev
   }
 
   async remove(id: string): Promise<string> {
