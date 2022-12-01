@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { ActivityModule } from './activity/activity.module';
+import { MealsModule } from './meals/meals.module';
 import * as dotenv from 'dotenv';
 
 dotenv.config({ path: '.env' });
@@ -23,6 +24,7 @@ dotenv.config({ path: '.env' });
     }),
     UsersModule,
     ActivityModule,
+    MealsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
