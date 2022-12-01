@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 // ajout typeORM module
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { UsersModule } from './users/users.module';
 import * as dotenv from 'dotenv';
 
 dotenv.config({ path: '.env' });
@@ -19,6 +20,7 @@ dotenv.config({ path: '.env' });
       entities: [],
       synchronize: process.env.MODE === 'DEV' ? true : false,
     }),
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
