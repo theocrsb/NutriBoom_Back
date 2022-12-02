@@ -1,5 +1,14 @@
 import { Activity } from 'src/activity/entities/activity.entity';
-import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  PrimaryColumn,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { v4 as uuid } from 'uuid';
 
 @Entity()
@@ -65,9 +74,8 @@ export class Users {
   password: string;
 
   @ManyToMany(() => Activity, (acti) => acti.id, { eager: true })
-    
   @JoinTable({
-    name: 'user_activity',
+    name: 'exercices',
     joinColumn: {
       name: 'userId',
       referencedColumnName: 'id',
@@ -77,5 +85,22 @@ export class Users {
       referencedColumnName: 'id',
     },
   })
-  
+  Activity: Activity[];
+}
+
+@Entity('exercices')
+export class Exercices {
+  @CreateDateColumn({ type: 'timestamp' })
+  createdAt: Date;
+
+  @UpdateDateColumn({ type: 'timestamp' })
+  updatedAt: Date;
+
+  @Column('uuid')
+  @PrimaryColumn()
+  userId: string;
+
+  @Column()
+  @PrimaryColumn()
+  activityId: number;
 }

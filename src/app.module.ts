@@ -9,7 +9,7 @@ import { MealsModule } from './meals/meals.module';
 import { TypesModule } from './types/types.module';
 import { FoodsModule } from './foods/foods.module';
 import * as dotenv from 'dotenv';
-import { Users } from './users/entities/user.entity';
+import { Exercices, Users } from './users/entities/user.entity';
 import { Activity } from './activity/entities/activity.entity';
 
 dotenv.config({ path: '.env' });
@@ -23,7 +23,7 @@ dotenv.config({ path: '.env' });
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [Users, Activity],
+      entities: [Users, Activity, Exercices],
       synchronize: process.env.MODE === 'DEV' ? true : false,
     }),
     UsersModule,
