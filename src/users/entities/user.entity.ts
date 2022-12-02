@@ -91,21 +91,22 @@ export class Users {
 }
 
 @Entity('exercices')
-// penser a mettre nullable true pour les exercices.
+// penser a mettre nullable true pour les exercices
 export class Exercices {
   @CreateDateColumn({ type: 'timestamp' })
-  createdAt: Date;
+  public createdAt!: Date;
 
   @UpdateDateColumn({ type: 'timestamp' })
-  updatedAt: Date;
+  public updatedAt!: Date;
 
-  @Column('uuid')
-  @PrimaryColumn()
-  userId: string;
+  // @Column('uuid')
+  // @PrimaryColumn()
+  @PrimaryGeneratedColumn('uuid')
+  public userId!: string;
 
   @Column()
-  @PrimaryColumn()
-  activityId: number;
+  // @PrimaryColumn()
+  public activityId!: number;
 
   @ManyToOne(() => Activity, (acti) => acti.id)
   public Activity!: Activity;
