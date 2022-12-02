@@ -1,3 +1,5 @@
+import { Activity } from 'src/activity/entities/activity.entity';
+
 export class UpdateUserDto {
   lastname?: string;
   firstname?: string;
@@ -7,4 +9,5 @@ export class UpdateUserDto {
   height?: number;
   email?: string;
   password?: string;
+  Activity: Activity[];
 }

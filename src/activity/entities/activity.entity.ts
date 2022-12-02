@@ -4,6 +4,7 @@ import {
   Entity,
   JoinTable,
   ManyToMany,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -27,6 +28,6 @@ export class Activity {
   conso_cal: number;
 
   // Ajout relation manytomany avec la table Users
-  @ManyToMany(() => Users, (user) => user.id, { eager: false })
+  @OneToMany(() => Users, (user) => user.id, { eager: false })
   Users: Users[];
 }

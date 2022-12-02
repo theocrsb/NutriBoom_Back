@@ -54,6 +54,9 @@ export class UsersService {
     if (userUpdate.weight !== undefined) {
       userUpdate.weight = updateUserDto.weight;
     }
+    if (userUpdate.Activity !== undefined) {
+      userUpdate.Activity = updateUserDto.Activity;
+    }
 
     return await this.userRepository.save(userUpdate);
   }

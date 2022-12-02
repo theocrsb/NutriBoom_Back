@@ -5,6 +5,8 @@ import {
   Entity,
   JoinTable,
   ManyToMany,
+  ManyToOne,
+  OneToMany,
   PrimaryColumn,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -73,22 +75,23 @@ export class Users {
   })
   password: string;
 
-  @ManyToMany(() => Activity, (acti) => acti.id, { eager: true })
-  @JoinTable({
-    name: 'exercices',
-    joinColumn: {
-      name: 'userId',
-      referencedColumnName: 'id',
-    },
-    inverseJoinColumn: {
-      name: 'activityId',
-      referencedColumnName: 'id',
-    },
-  })
+  @OneToMany(() => Activity, (acti) => acti.id, { eager: true })
+  // @JoinTable({
+  //   name: 'exercices',
+  //   joinColumn: {
+  //     name: 'userId',
+  //     referencedColumnName: 'id',
+  //   },
+  //   inverseJoinColumn: {
+  //     name: 'activityId',
+  //     referencedColumnName: 'id',
+  //   },
+  // })
   Activity: Activity[];
 }
 
 @Entity('exercices')
+// penser a mettre nullable true pour les exercices.
 export class Exercices {
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
@@ -103,4 +106,10 @@ export class Exercices {
   @Column()
   @PrimaryColumn()
   activityId: number;
+
+  @ManyToOne(() => Activity, (acti) => acti.id)
+  public Activity!: Activity;
+
+  @ManyToOne(() => Users, (user) => user.id)
+  public Users!: Users;
 }
