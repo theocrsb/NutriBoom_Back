@@ -3,24 +3,24 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from './entities/user.entity';
+import { Users } from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
   // Ajout constructor pour interagir avec la table User
   constructor(
-    @InjectRepository(User)
-    private userRepository: Repository<User>,
+    @InjectRepository(Users)
+    private userRepository: Repository<Users>,
   ) {}
-  async create(createUserDto: CreateUserDto): Promise<User> {
+  async create(createUserDto: CreateUserDto): Promise<Users> {
     return await this.userRepository.save(createUserDto);
   }
 
-  async findAll(): Promise<User[]> {
+  async findAll(): Promise<Users[]> {
     return await this.userRepository.find();
   }
 
-  async findOne(id: string): Promise<User> {
+  async findOne(id: string): Promise<Users> {
     const userFound = await this.userRepository.findOneBy({ id: id });
     if (!userFound) {
       throw new NotFoundException(`Pas d'utilisateurs avec l'id : ${id}`);
@@ -28,7 +28,7 @@ export class UsersService {
     return userFound;
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
+  async update(id: string, updateUserDto: UpdateUserDto): Promise<Users> {
     const userUpdate = await this.findOne(id);
     if (userUpdate.lastname !== undefined) {
       userUpdate.lastname = updateUserDto.lastname;
