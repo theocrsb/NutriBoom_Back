@@ -7,7 +7,7 @@ import { Users } from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
-  // Ajout constructor pour interagir avec la table User
+  // Ajout constructor pour interagir avec la table Users
   constructor(
     @InjectRepository(Users)
     private userRepository: Repository<Users>,
@@ -54,9 +54,9 @@ export class UsersService {
     if (userUpdate.weight !== undefined) {
       userUpdate.weight = updateUserDto.weight;
     }
-    if (userUpdate.Activity !== undefined) {
-      userUpdate.Activity = updateUserDto.Activity;
-    }
+    // if (userUpdate.Activity !== undefined) {
+    //   userUpdate.Activity = updateUserDto.Activity;
+    // }
 
     return await this.userRepository.save(userUpdate);
   }

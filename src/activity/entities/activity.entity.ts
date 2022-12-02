@@ -1,4 +1,4 @@
-import { Users } from 'src/users/entities/user.entity';
+import { Exercices } from 'src/users/entities/user.entity';
 import {
   Column,
   Entity,
@@ -27,7 +27,8 @@ export class Activity {
   })
   conso_cal: number;
 
-  // Ajout relation manytomany avec la table Users
-  @OneToMany(() => Users, (user) => user.id, { eager: false })
-  Users: Users[];
+  // Ajout relation onetomany avec la table Users
+  @OneToMany(() => Exercices, (exercices) => exercices.Activity)
+  public exercices!: Exercices[];
+  // Users: Users[];
 }

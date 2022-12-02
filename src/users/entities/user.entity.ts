@@ -75,7 +75,10 @@ export class Users {
   })
   password: string;
 
-  @OneToMany(() => Activity, (acti) => acti.id, { eager: true })
+  @OneToMany(() => Exercices, (exercices) => exercices.Users)
+  public exercices!: Exercices[];
+
+  // @OneToMany(() => Activity, (acti) => acti.id, { eager: true })
   // @JoinTable({
   //   name: 'exercices',
   //   joinColumn: {
@@ -87,12 +90,15 @@ export class Users {
   //     referencedColumnName: 'id',
   //   },
   // })
-  Activity: Activity[];
+  // Activity: Activity[];
 }
 
 @Entity('exercices')
 // penser a mettre nullable true pour les exercices
 export class Exercices {
+  @PrimaryGeneratedColumn()
+  public exercicesId!: number;
+
   @CreateDateColumn({ type: 'timestamp' })
   public createdAt!: Date;
 
@@ -101,11 +107,11 @@ export class Exercices {
 
   // @Column('uuid')
   // @PrimaryColumn()
-  @PrimaryGeneratedColumn('uuid')
+  @Column()
   public userId!: string;
 
-  @Column()
   // @PrimaryColumn()
+  @Column()
   public activityId!: number;
 
   @ManyToOne(() => Activity, (acti) => acti.id)
