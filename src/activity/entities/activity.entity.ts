@@ -28,7 +28,9 @@ export class Activity {
   conso_cal: number;
 
   // Ajout relation onetomany avec la table Users
-  @OneToMany(() => Exercices, (exercices) => exercices.Activity)
+  @OneToMany(() => Exercices, (exercices) => exercices.Activity, {
+    eager: false,
+  })
   public exercices!: Exercices[];
   // Users: Users[];
 }

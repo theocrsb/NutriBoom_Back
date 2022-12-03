@@ -75,7 +75,7 @@ export class Users {
   })
   password: string;
 
-  @OneToMany(() => Exercices, (exercices) => exercices.Users)
+  @OneToMany(() => Exercices, (exercices) => exercices.Users, { eager: true })
   public exercices!: Exercices[];
 
   // @OneToMany(() => Activity, (acti) => acti.id, { eager: true })
@@ -107,16 +107,18 @@ export class Exercices {
 
   // @Column('uuid')
   // @PrimaryColumn()
+  //
   @Column()
   public userId!: string;
 
   // @PrimaryColumn()
+  //
   @Column()
   public activityId!: number;
 
   @ManyToOne(() => Activity, (acti) => acti.id)
   public Activity!: Activity;
 
-  @ManyToOne(() => Users, (user) => user.id)
+  @ManyToOne(() => Users, (users) => users.id)
   public Users!: Users;
 }

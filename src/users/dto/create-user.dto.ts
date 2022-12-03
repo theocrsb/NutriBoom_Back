@@ -9,5 +9,4 @@ export class CreateUserDto {
   height: number;
   email: string;
   password: string;
-  Activity: Activity[];
 }
