@@ -1,1 +1,4 @@
-export class UpdateMealDto {}
+export class UpdateMealDto {
+  name: string;
+  date: string;
+}

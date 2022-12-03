@@ -11,6 +11,9 @@ import { FoodsModule } from './foods/foods.module';
 import * as dotenv from 'dotenv';
 import { Users } from './users/entities/user.entity';
 import { Activity } from './activity/entities/activity.entity';
+import { Meals } from './meals/entities/meal.entity';
+import { Type } from './types/entities/type.entity';
+import { Food } from './foods/entities/food.entity';
 
 dotenv.config({ path: '.env' });
 
@@ -23,7 +26,7 @@ dotenv.config({ path: '.env' });
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [Users, Activity],
+      entities: [Users, Activity, Meals, Type, Food],
       synchronize: process.env.MODE === 'DEV' ? true : false,
     }),
     UsersModule,
