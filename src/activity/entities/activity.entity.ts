@@ -1,12 +1,5 @@
-import { Exercices } from 'src/users/entities/user.entity';
-import {
-  Column,
-  Entity,
-  JoinTable,
-  ManyToMany,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Exercices } from 'src/exercices/entities/exercice.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Activity {
@@ -28,9 +21,7 @@ export class Activity {
   conso_cal: number;
 
   // Ajout relation onetomany avec la table Users
-  @OneToMany(() => Exercices, (exercices) => exercices.Activity, {
-    eager: false,
-  })
+  @OneToMany(() => Exercices, (exercices) => exercices.activity)
   public exercices!: Exercices[];
   // Users: Users[];
 }

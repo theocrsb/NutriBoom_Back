@@ -1,6 +1,4 @@
 import { Activity } from 'src/activity/entities/activity.entity';
-import { Exercices } from '../entities/user.entity';
-
 export class UpdateUserDto {
   lastname?: string;
   firstname?: string;

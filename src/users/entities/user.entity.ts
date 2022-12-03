@@ -1,4 +1,4 @@
-import { Activity } from 'src/activity/entities/activity.entity';
+import { Exercices } from 'src/exercices/entities/exercice.entity';
 import {
   Column,
   CreateDateColumn,
@@ -75,7 +75,7 @@ export class Users {
   })
   password: string;
 
-  @OneToMany(() => Exercices, (exercices) => exercices.Users, { eager: true })
+  @OneToMany(() => Exercices, (exercices) => exercices.users)
   public exercices!: Exercices[];
 
   // @OneToMany(() => Activity, (acti) => acti.id, { eager: true })
@@ -93,32 +93,32 @@ export class Users {
   // Activity: Activity[];
 }
 
-@Entity('exercices')
+// @Entity('exercices')
 // penser a mettre nullable true pour les exercices
-export class Exercices {
-  @PrimaryGeneratedColumn()
-  public exercicesId!: number;
+// export class Exercices {
+//   @PrimaryGeneratedColumn()
+//   public exercicesId!: number;
 
-  @CreateDateColumn({ type: 'timestamp' })
-  public createdAt!: Date;
+//   @CreateDateColumn({ type: 'timestamp' })
+//   public createdAt!: Date;
 
-  @UpdateDateColumn({ type: 'timestamp' })
-  public updatedAt!: Date;
+//   @UpdateDateColumn({ type: 'timestamp' })
+//   public updatedAt!: Date;
 
-  // @Column('uuid')
-  // @PrimaryColumn()
-  //
-  @Column()
-  public userId!: string;
+//   // @Column('uuid')
+//   // @PrimaryColumn()
+//   //
+//   @Column()
+//   public userId!: string;
 
-  // @PrimaryColumn()
-  //
-  @Column()
-  public activityId!: number;
+//   // @PrimaryColumn()
+//   //
+//   @Column()
+//   public activityId!: number;
 
-  @ManyToOne(() => Activity, (acti) => acti.id)
-  public Activity!: Activity;
+//   @ManyToOne(() => Activity, (acti) => acti.id)
+//   public Activity!: Activity;
 
-  @ManyToOne(() => Users, (users) => users.id)
-  public Users!: Users;
-}
+//   @ManyToOne(() => Users, (users) => users.id)
+//   public Users!: Users;
+// }
