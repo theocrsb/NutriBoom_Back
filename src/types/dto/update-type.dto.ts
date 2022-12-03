@@ -1,1 +1,3 @@
-export class UpdateTypeDto {}
+export class UpdateTypeDto {
+  name: string;
+}

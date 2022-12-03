@@ -1,26 +1,50 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateMealDto } from './dto/create-meal.dto';
 import { UpdateMealDto } from './dto/update-meal.dto';
+import { Meals } from './entities/meal.entity';
 
 @Injectable()
 export class MealsService {
-  create(createMealDto: CreateMealDto) {
-    return 'This action adds a new meal';
+  constructor(
+    @InjectRepository(Meals)
+    private mealsRepository: Repository<Meals>,
+  ) {}
+
+  async create(createMealDto: CreateMealDto): Promise<Meals> {
+    return await this.mealsRepository.save(createMealDto);
   }
 
-  findAll() {
-    return `This action returns all meals`;
+  async findAll(): Promise<Meals[]> {
+    return await this.mealsRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} meal`;
+  async findOne(id: string): Promise<Meals> {
+    const mealFound = await this.mealsRepository.findOneBy({ id: id });
+    if (!mealFound) {
+      throw new NotFoundException(`Pas d'activités avec l'id: ${id}`);
+    }
+    return mealFound;
   }
 
-  update(id: number, updateMealDto: UpdateMealDto) {
-    return `This action updates a #${id} meal`;
+  async update(id: string, updateMealDto: UpdateMealDto): Promise<Meals> {
+    const updateMeal = await this.findOne(id);
+    if (updateMeal.name !== undefined) {
+      updateMeal.name = updateMealDto.name;
+    }
+
+    if (updateMeal.date !== undefined) {
+      updateMeal.date = updateMealDto.date;
+    }
+    return await this.mealsRepository.save(updateMeal);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} meal`;
+  async remove(id: string): Promise<string> {
+    const result = await this.mealsRepository.delete({ id });
+    if (result.affected === 0) {
+      throw new NotFoundException(`Pas d'activités avec l'id: ${id}`);
+    }
+    return `l'activité à l'id: ${id} a été supprimée!`;
   }
 }

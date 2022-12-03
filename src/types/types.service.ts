@@ -1,26 +1,46 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateTypeDto } from './dto/create-type.dto';
 import { UpdateTypeDto } from './dto/update-type.dto';
+import { Type } from './entities/type.entity';
 
 @Injectable()
 export class TypesService {
-  create(createTypeDto: CreateTypeDto) {
-    return 'This action adds a new type';
+  constructor(
+    @InjectRepository(Type)
+    private typeRepository: Repository<Type>,
+  ) {}
+  async create(createTypeDto: CreateTypeDto): Promise<Type> {
+    return await this.typeRepository.save(createTypeDto);
   }
 
-  findAll() {
-    return `This action returns all types`;
+  async findAll(): Promise<Type[]> {
+    return await this.typeRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} type`;
+  async findOne(id: string) {
+    const mealFound = await this.typeRepository.findOneBy({ id: id });
+    if (!mealFound) {
+      throw new NotFoundException(`Pas de types de repas avec l'id: ${id}`);
+    }
+    return mealFound;
   }
 
-  update(id: number, updateTypeDto: UpdateTypeDto) {
-    return `This action updates a #${id} type`;
+  async update(id: string, updateTypeDto: UpdateTypeDto): Promise<Type> {
+    const updateType = await this.findOne(id);
+    if (updateType.name !== undefined) {
+      updateType.name = updateTypeDto.name;
+    }
+
+    return await this.typeRepository.save(updateType);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} type`;
+  async remove(id: string) {
+    const result = await this.typeRepository.delete({ id });
+    if (result.affected === 0) {
+      throw new NotFoundException(`Pas de types de repas avec l'id: ${id}`);
+    }
+    return `le type de repas à l'id: ${id} a été supprimé!`;
   }
 }
