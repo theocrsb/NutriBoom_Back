@@ -1,4 +1,4 @@
 export class CreateActivityDto {
   name: string;
-  conso_cal: number;
+  conso_cal_1h: number;
 }

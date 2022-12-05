@@ -22,6 +22,8 @@ export class ActivityService {
 
   async findOne(id: string): Promise<Activity> {
     const activityFound = await this.activityRepository.findOneBy({ id: id });
+    //const query = this.activityRepository.createQueryBuilder();
+    //query.select('').where('')
     if (!activityFound) {
       throw new NotFoundException(`Pas d'activités avec l'id: ${id}`);
     }
@@ -38,7 +40,7 @@ export class ActivityService {
     }
 
     if (updateActivity.conso_cal_1h !== undefined) {
-      updateActivity.conso_cal_1h = updateActivityDto.conso_cal;
+      updateActivity.conso_cal_1h = updateActivityDto.conso_cal_1h;
     }
     return await this.activityRepository.save(updateActivity);
   }

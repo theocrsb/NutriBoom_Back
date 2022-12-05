@@ -21,7 +21,7 @@ export class Exercices {
   // updatedAt!: Date;
 
   @Column()
-  Time!: number;
+  time!: number;
 
   @ManyToOne(() => Activity, (acti) => acti.id)
   activity!: Activity;
