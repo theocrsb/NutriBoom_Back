@@ -17,19 +17,11 @@ export class Exercices {
   @CreateDateColumn({ type: 'timestamp' })
   createdAt!: Date;
 
-  @UpdateDateColumn({ type: 'timestamp' })
-  updatedAt!: Date;
+  // @UpdateDateColumn({ type: 'timestamp' })
+  // updatedAt!: Date;
 
-  // @Column('uuid')
-  // @PrimaryColumn()
-  //
-  // @Column()
-  // userId!: string;
-
-  // // @PrimaryColumn()
-  // //
-  // @Column()
-  // activityId!: number;
+  @Column()
+  kcalSpend!: number;
 
   @ManyToOne(() => Activity, (acti) => acti.id)
   activity!: Activity;

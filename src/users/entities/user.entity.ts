@@ -77,48 +77,4 @@ export class Users {
 
   @OneToMany(() => Exercices, (exercices) => exercices.users)
   exercices!: Exercices[];
-
-  // @OneToMany(() => Activity, (acti) => acti.id, { eager: true })
-  // @JoinTable({
-  //   name: 'exercices',
-  //   joinColumn: {
-  //     name: 'userId',
-  //     referencedColumnName: 'id',
-  //   },
-  //   inverseJoinColumn: {
-  //     name: 'activityId',
-  //     referencedColumnName: 'id',
-  //   },
-  // })
-  // Activity: Activity[];
 }
-
-// @Entity('exercices')
-// penser a mettre nullable true pour les exercices
-// export class Exercices {
-//   @PrimaryGeneratedColumn()
-//   public exercicesId!: number;
-
-//   @CreateDateColumn({ type: 'timestamp' })
-//   public createdAt!: Date;
-
-//   @UpdateDateColumn({ type: 'timestamp' })
-//   public updatedAt!: Date;
-
-//   // @Column('uuid')
-//   // @PrimaryColumn()
-//   //
-//   @Column()
-//   public userId!: string;
-
-//   // @PrimaryColumn()
-//   //
-//   @Column()
-//   public activityId!: number;
-
-//   @ManyToOne(() => Activity, (acti) => acti.id)
-//   public Activity!: Activity;
-
-//   @ManyToOne(() => Users, (users) => users.id)
-//   public Users!: Users;
-// }

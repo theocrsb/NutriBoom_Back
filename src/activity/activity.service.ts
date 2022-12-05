@@ -37,8 +37,8 @@ export class ActivityService {
       updateActivity.name = updateActivityDto.name;
     }
 
-    if (updateActivity.conso_cal !== undefined) {
-      updateActivity.conso_cal = updateActivityDto.conso_cal;
+    if (updateActivity.conso_cal_1h !== undefined) {
+      updateActivity.conso_cal_1h = updateActivityDto.conso_cal;
     }
     return await this.activityRepository.save(updateActivity);
   }
