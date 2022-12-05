@@ -3,16 +3,6 @@ import { Users } from 'src/users/entities/user.entity';
 
 export class CreateExerciceDto {
   id?: number;
-
-  createdAt?: Date;
-
-  updatedAt?: Date;
-
-  userId?: string;
-
-  activityId?: number;
-
-  activity?: Activity;
-
-  users?: Users;
+  activity: Activity;
+  users: Users;
 }

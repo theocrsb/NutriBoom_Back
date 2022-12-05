@@ -28,7 +28,7 @@ dotenv.config({ path: '.env' });
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [Users, Activity, Meals, Type, Food, Exercices],
+      entities: [Users, Exercices, Activity, Meals, Type, Food],
       synchronize: process.env.MODE === 'DEV' ? true : false,
     }),
     UsersModule,

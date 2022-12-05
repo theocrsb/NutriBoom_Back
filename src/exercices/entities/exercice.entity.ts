@@ -3,35 +3,37 @@ import { Users } from 'src/users/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
+  Entity,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
+@Entity()
 export class Exercices {
   @PrimaryGeneratedColumn()
-  public id!: number;
+  id!: number;
 
   @CreateDateColumn({ type: 'timestamp' })
-  public createdAt!: Date;
+  createdAt!: Date;
 
   @UpdateDateColumn({ type: 'timestamp' })
-  public updatedAt!: Date;
+  updatedAt!: Date;
 
   // @Column('uuid')
   // @PrimaryColumn()
   //
-  @Column()
-  public userId!: string;
+  // @Column()
+  // userId!: string;
 
-  // @PrimaryColumn()
-  //
-  @Column()
-  public activityId!: number;
+  // // @PrimaryColumn()
+  // //
+  // @Column()
+  // activityId!: number;
 
   @ManyToOne(() => Activity, (acti) => acti.id)
-  public activity!: Activity;
+  activity!: Activity;
 
   @ManyToOne(() => Users, (users) => users.id)
-  public users!: Users;
+  users!: Users;
 }

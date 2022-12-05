@@ -11,9 +11,9 @@ export class ExercicesService {
     @InjectRepository(Exercices)
     private activityRepository: Repository<Exercices>,
   ) {}
-  // async create(createExerciceDto: CreateExerciceDto): Promise<Exercices> {
-  //   return await this.activityRepository.save(createExerciceDto);
-  // }
+  async create(createExerciceDto: CreateExerciceDto): Promise<Exercices> {
+    return await this.activityRepository.save(createExerciceDto);
+  }
 
   async findAll(): Promise<Exercices[]> {
     return await this.activityRepository.find();

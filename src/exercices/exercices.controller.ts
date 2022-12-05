@@ -16,9 +16,9 @@ export class ExercicesController {
   constructor(private readonly exercicesService: ExercicesService) {}
 
   @Post()
-  // create(@Body() createExerciceDto: CreateExerciceDto) {
-  //   return this.exercicesService.create(createExerciceDto);
-  // }
+  create(@Body() createExerciceDto: CreateExerciceDto) {
+    return this.exercicesService.create(createExerciceDto);
+  }
   @Get()
   findAll() {
     return this.exercicesService.findAll();

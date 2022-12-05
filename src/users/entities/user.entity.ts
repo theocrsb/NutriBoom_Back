@@ -76,7 +76,7 @@ export class Users {
   password: string;
 
   @OneToMany(() => Exercices, (exercices) => exercices.users)
-  public exercices!: Exercices[];
+  exercices!: Exercices[];
 
   // @OneToMany(() => Activity, (acti) => acti.id, { eager: true })
   // @JoinTable({

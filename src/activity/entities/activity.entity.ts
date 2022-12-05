@@ -22,6 +22,6 @@ export class Activity {
 
   // Ajout relation onetomany avec la table Users
   @OneToMany(() => Exercices, (exercices) => exercices.activity)
-  public exercices!: Exercices[];
+  exercices!: Exercices[];
   // Users: Users[];
 }
