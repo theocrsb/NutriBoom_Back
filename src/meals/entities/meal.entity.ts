@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Users } from 'src/users/entities/user.entity';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Meals {
@@ -18,4 +25,7 @@ export class Meals {
     length: 50,
   })
   date: string;
+
+  @OneToMany(() => Users, (user) => user.meal)
+  users: Users[];
 }

@@ -1,15 +1,11 @@
 import { Exercices } from 'src/exercices/entities/exercice.entity';
+import { Meals } from 'src/meals/entities/meal.entity';
 import {
   Column,
-  CreateDateColumn,
   Entity,
-  JoinTable,
-  ManyToMany,
   ManyToOne,
   OneToMany,
-  PrimaryColumn,
   PrimaryGeneratedColumn,
-  UpdateDateColumn,
 } from 'typeorm';
 import { v4 as uuid } from 'uuid';
 
@@ -77,4 +73,7 @@ export class Users {
 
   @OneToMany(() => Exercices, (exercices) => exercices.users)
   exercices!: Exercices[];
+
+  @ManyToOne(() => Meals, (meal) => meal.users)
+  meal: Meals;
 }
