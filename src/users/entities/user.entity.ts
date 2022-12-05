@@ -75,7 +75,10 @@ export class Users {
   @OneToMany(() => Exercices, (exercices) => exercices.users)
   exercices!: Exercices[];
 
-  @ManyToOne(() => Meals, (meal) => meal.users)
-  @JoinColumn({ name: 'createMeal' })
-  meal!: Meals;
+  // @ManyToOne(() => Meals, (meal) => meal.users)
+  // @JoinColumn({ name: 'createMeal' })
+  // meal!: Meals;
+
+  @ManyToOne(() => Meals, (meal) => meal.id)
+  meals: Meals[];
 }
