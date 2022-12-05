@@ -3,6 +3,7 @@ import { Meals } from 'src/meals/entities/meal.entity';
 import {
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -75,5 +76,6 @@ export class Users {
   exercices!: Exercices[];
 
   @ManyToOne(() => Meals, (meal) => meal.users)
-  meal: Meals;
+  @JoinColumn({ name: 'createMeal' })
+  meal!: Meals;
 }

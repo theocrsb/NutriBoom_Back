@@ -27,5 +27,5 @@ export class Meals {
   date: string;
 
   @OneToMany(() => Users, (user) => user.meal)
-  users: Users[];
+  users!: Users[];
 }
