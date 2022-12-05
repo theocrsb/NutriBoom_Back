@@ -21,7 +21,7 @@ export class Exercices {
   // updatedAt!: Date;
 
   @Column()
-  kcalSpend!: number;
+  Time!: number;
 
   @ManyToOne(() => Activity, (acti) => acti.id)
   activity!: Activity;
