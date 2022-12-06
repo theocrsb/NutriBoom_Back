@@ -59,7 +59,7 @@ export class Users {
 
   @Column({
     nullable: false,
-    type: 'int',
+    type: 'decimal',
     width: 6,
   })
   ratio: number;
