@@ -6,6 +6,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { Users } from './entities/user.entity';
 import { Role } from 'src/role/entities/role.entity';
 import { RoleService } from 'src/role/role.service';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
