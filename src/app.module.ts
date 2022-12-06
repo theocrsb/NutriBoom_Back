@@ -16,6 +16,7 @@ import { Type } from './types/entities/type.entity';
 import { Food } from './foods/entities/food.entity';
 import { ExercicesModule } from './exercices/exercices.module';
 import { Exercices } from './exercices/entities/exercice.entity';
+import { RoleModule } from './role/role.module';
 
 dotenv.config({ path: '.env' });
 
@@ -37,6 +38,7 @@ dotenv.config({ path: '.env' });
     TypesModule,
     FoodsModule,
     ExercicesModule,
+    RoleModule,
   ],
   controllers: [AppController],
   providers: [AppService],
