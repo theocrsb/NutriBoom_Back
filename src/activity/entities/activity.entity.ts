@@ -1,5 +1,11 @@
 import { Exercices } from 'src/exercices/entities/exercice.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Activity {
@@ -28,6 +34,6 @@ export class Activity {
   // time_minutes: number;
 
   // Ajout relation onetomany avec la table Users
-  @OneToMany(() => Exercices, (exercices) => exercices.activity)
+  @ManyToOne(() => Exercices, (exercices) => exercices.activity)
   exercices!: Exercices[];
 }

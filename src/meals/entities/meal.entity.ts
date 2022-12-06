@@ -36,9 +36,9 @@ export class Meals {
   //   foods!: Food[];
   //
 
-  @OneToMany(() => Users, (user) => user.id)
+  @ManyToOne(() => Users, (user) => user.id)
   users: Users;
 
-  @OneToMany(() => Type, (type) => type.id)
+  @ManyToOne(() => Type, (type) => type.id)
   types: Type;
 }

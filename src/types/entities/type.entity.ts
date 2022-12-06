@@ -1,5 +1,11 @@
 import { Meals } from 'src/meals/entities/meal.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Type {
@@ -13,7 +19,7 @@ export class Type {
   })
   name: string;
 
-  @ManyToOne(() => Meals, (meal) => meal.id)
+  @OneToMany(() => Meals, (meal) => meal.id)
   meals: Meals[];
 
   //@ManyToOne(() => Meals, (meal) => meal.id, { eager:true })
