@@ -13,6 +13,10 @@ export class UsersService {
     private userRepository: Repository<Users>,
   ) {}
   async create(createUserDto: CreateUserDto): Promise<Users> {
+    // 1 - recuperer objet role . user classique (via repository)
+    // 2- creer une instance de user a l'aide du repo user
+    // 3- update l'instance de user pour modifier sa proprieter role avec ce qui a ete recuperer a l'etape 1
+    // 4- save
     return await this.userRepository.save(createUserDto);
   }
 
