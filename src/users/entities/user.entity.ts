@@ -79,14 +79,14 @@ export class Users {
   })
   password: string;
 
-  @OneToMany(() => Exercices, (exercices) => exercices.users)
+  @ManyToOne(() => Exercices, (exercices) => exercices.users)
   exercices!: Exercices[];
 
   // @ManyToOne(() => Meals, (meal) => meal.users)
   // @JoinColumn({ name: 'createMeal' })
   // meal!: Meals;
 
-  @ManyToOne(() => Meals, (meal) => meal.id)
+  @OneToMany(() => Meals, (meal) => meal.id)
   meals: Meals[];
 
   //@ManyToOne(() => Meals, (meal) => meal.id, { eager:true })
