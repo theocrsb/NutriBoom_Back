@@ -4,6 +4,8 @@ import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Users } from './entities/user.entity';
+import { Role } from 'src/role/entities/role.entity';
+import { RoleService } from 'src/role/role.service';
 
 @Injectable()
 export class UsersService {
@@ -11,13 +13,33 @@ export class UsersService {
   constructor(
     @InjectRepository(Users)
     private userRepository: Repository<Users>,
+    @InjectRepository(Role)
+    private roleRepository: Repository<Role>,
   ) {}
+  // Ajout constructor pour interagir avec la table role
+
   async create(createUserDto: CreateUserDto): Promise<Users> {
+    const roleUser = await this.roleRepository.findOneBy({ label: 'user' });
+    // const roleUserString = roleUser.label;
+    console.log('roleUser ', roleUser);
+    const userCreate = await this.userRepository.save(createUserDto);
+    console.log(userCreate);
+    userCreate.role = roleUser;
+    if (userCreate.role.label !== 'user') {
+      throw new NotFoundException(`Pas un user !!!`);
+    }
+    console.log('apres MAJ .role', userCreate);
+
+    // const userInstance = new Users();
+    // console.log('userInstance', userInstance);
+    // userInstance.role = roleUser[0];
+    // console.log('roleUser', roleUser[0]);
+
     // 1 - recuperer objet role . user classique (via repository)
     // 2- creer une instance de user a l'aide du repo user
     // 3- update l'instance de user pour modifier sa proprieter role avec ce qui a ete recuperer a l'etape 1
     // 4- save
-    return await this.userRepository.save(createUserDto);
+    return await this.userRepository.save(userCreate);
   }
 
   async findAll(): Promise<Users[]> {
