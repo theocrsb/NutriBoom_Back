@@ -34,11 +34,6 @@ export class Activity {
   // time_minutes: number;
 
   // Ajout relation onetomany avec la table Users
-<<<<<<< HEAD
   @OneToMany(() => Exercices, (exercices) => exercices.activity)
-=======
-  //Many correspond a Activity
-  @ManyToOne(() => Exercices, (exercices) => exercices.activity)
->>>>>>> 19a928d3ab7982caa1e7a946c0fffd4c7d33ec1d
   exercices!: Exercices[];
 }
