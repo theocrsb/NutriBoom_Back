@@ -86,6 +86,6 @@ export class Users {
   @OneToMany(() => Meals, (meal) => meal.id)
   meals: Meals[];
 
-  @ManyToOne(() => Role, (role) => role.user)
+  @ManyToOne(() => Role, (role) => role.user, { nullable: false })
   role: Role;
 }
