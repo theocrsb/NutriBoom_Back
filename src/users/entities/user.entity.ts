@@ -79,7 +79,7 @@ export class Users {
   })
   password: string;
 
-  @ManyToOne(() => Exercices, (exercices) => exercices.users)
+  @OneToMany(() => Exercices, (exercices) => exercices.users)
   exercices!: Exercices[];
 
   // @ManyToOne(() => Meals, (meal) => meal.users)
