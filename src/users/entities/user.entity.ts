@@ -81,4 +81,7 @@ export class Users {
 
   @ManyToOne(() => Meals, (meal) => meal.id)
   meals: Meals[];
+
+  //@ManyToOne(() => Meals, (meal) => meal.id, { eager:true })
+  // meals: Meals[];
 }

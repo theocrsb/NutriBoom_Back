@@ -15,4 +15,7 @@ export class Type {
 
   @ManyToOne(() => Meals, (meal) => meal.id)
   meals: Meals[];
+
+  //@ManyToOne(() => Meals, (meal) => meal.id, { eager:true })
+  //meals: Meals[];
 }
