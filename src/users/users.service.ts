@@ -30,6 +30,14 @@ export class UsersService {
       throw new NotFoundException(`Pas un user !!!`);
     }
     console.log('apres MAJ .role', userCreate);
+    const saltOrRounds = 10;
+    const password = userCreate.password;
+    console.log('password: ', password);
+    const hash = await bcrypt.hash(password, saltOrRounds);
+    console.log('hash: ', hash);
+    userCreate.password = hash;
+    console.log('user create password: ', userCreate.password);
+    // const salt = await bcrypt.genSalt();
 
     // const userInstance = new Users();
     // console.log('userInstance', userInstance);
