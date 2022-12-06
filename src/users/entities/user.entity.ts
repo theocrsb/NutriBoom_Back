@@ -59,6 +59,13 @@ export class Users {
 
   @Column({
     nullable: false,
+    type: 'int',
+    width: 6,
+  })
+  ratio: number;
+
+  @Column({
+    nullable: false,
     type: 'varchar',
     length: 100,
     unique: true,
