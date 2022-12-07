@@ -7,9 +7,9 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { CreateEatenFoodDto } from './dto/create-meal.dto';
-import { UpdateEatenFoodDto } from './dto/update-meal.dto';
-import { EatenFoodService } from './meals.service';
+import { CreateEatenFoodDto } from './dto/create-eatenfood.dto';
+import { UpdateEatenFoodDto } from './dto/update-eatenfood.dto';
+import { EatenFoodService } from './eatenfood.service';
 
 @Controller('meals')
 export class EatenFoodController {

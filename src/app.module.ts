@@ -5,13 +5,11 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { ActivityModule } from './activity/activity.module';
-import { MealsModule } from './meals/meals.module';
 import { TypesModule } from './types/types.module';
 import { FoodsModule } from './foods/foods.module';
 import * as dotenv from 'dotenv';
 import { Users } from './users/entities/user.entity';
 import { Activity } from './activity/entities/activity.entity';
-import { Meals } from './meals/entities/meal.entity';
 import { Type } from './types/entities/type.entity';
 import { Food } from './foods/entities/food.entity';
 import { ExercicesModule } from './exercices/exercices.module';
@@ -19,8 +17,8 @@ import { Exercices } from './exercices/entities/exercice.entity';
 import { RoleModule } from './role/role.module';
 import { Role } from './role/entities/role.entity';
 import { AuthModule } from './auth/auth.module';
-import { EatenFoodModule } from './eatenfood/meals.module';
-import { EatenFood } from './eatenfood/entities/meal.entity';
+import { EatenFoodModule } from './eatenfood/eatenfood.module';
+import { EatenFood } from './eatenfood/entities/eatenfood.entity';
 
 dotenv.config({ path: '.env' });
 

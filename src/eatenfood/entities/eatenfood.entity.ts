@@ -34,10 +34,10 @@ export class EatenFood {
   })
   quantity: number;
 
-  @ManyToOne(() => Users, (user) => user.meals)
+  @ManyToOne(() => Users, (user) => user.eatenfood)
   users: Users;
 
-  @ManyToOne(() => Type, (type) => type.meals)
+  @ManyToOne(() => Type, (type) => type.eatenfood)
   types: Type;
 
   @ManyToMany(() => Food, { eager: true })

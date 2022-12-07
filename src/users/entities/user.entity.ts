@@ -1,4 +1,4 @@
-import { EatenFood } from 'src/eatenfood/entities/meal.entity';
+import { EatenFood } from 'src/eatenfood/entities/eatenfood.entity';
 import { Exercices } from 'src/exercices/entities/exercice.entity';
 
 import { Role } from 'src/role/entities/role.entity';
@@ -84,8 +84,8 @@ export class Users {
   @OneToMany(() => Exercices, (exercices) => exercices.users, { eager: true })
   exercices!: Exercices[];
 
-  @OneToMany(() => EatenFood, (meal) => meal.users, { eager: true })
-  meals: EatenFood[];
+  @OneToMany(() => EatenFood, (eatenfood) => eatenfood.users, { eager: true })
+  eatenfood: EatenFood[];
 
   @ManyToOne(() => Role, (role) => role.users, { eager: true })
   role: Role;

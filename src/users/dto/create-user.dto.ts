@@ -1,6 +1,5 @@
 import { Activity } from 'src/activity/entities/activity.entity';
 import { Exercices } from 'src/exercices/entities/exercice.entity';
-import { Meals } from 'src/meals/entities/meal.entity';
 import { Role } from 'src/role/entities/role.entity';
 
 export class CreateUserDto {

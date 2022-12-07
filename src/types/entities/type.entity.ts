@@ -1,4 +1,4 @@
-import { EatenFood } from 'src/eatenfood/entities/meal.entity';
+import { EatenFood } from 'src/eatenfood/entities/eatenfood.entity';
 import {
   Column,
   Entity,
@@ -19,6 +19,6 @@ export class Type {
   })
   name: string;
 
-  @OneToMany(() => EatenFood, (meal) => meal.types)
-  meals: EatenFood[];
+  @OneToMany(() => EatenFood, (eatenfood) => eatenfood.types)
+  eatenfood: EatenFood[];
 }
