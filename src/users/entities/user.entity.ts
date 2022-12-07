@@ -87,11 +87,6 @@ export class Users {
   @OneToMany(() => EatenFood, (meal) => meal.users, { eager: true })
   meals: EatenFood[];
 
-  @ManyToOne(
-    () => Role,
-    (role) => role.users,
-    { eager: true },
-    // , { nullable: false }
-  )
+  @ManyToOne(() => Role, (role) => role.users, { eager: true })
   role: Role;
 }
