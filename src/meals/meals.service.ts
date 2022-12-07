@@ -34,8 +34,8 @@ export class MealsService {
       updateMeal.name = updateMealDto.name;
     }
 
-    if (updateMeal.date !== undefined) {
-      updateMeal.date = updateMealDto.date;
+    if (updateMeal.createdAt !== undefined) {
+      updateMeal.createdAt = updateMealDto.date;
     }
     return await this.mealsRepository.save(updateMeal);
   }

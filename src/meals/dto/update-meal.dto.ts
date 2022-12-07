@@ -1,4 +1,5 @@
 export class UpdateMealDto {
   name: string;
-  date: string;
+  date: Date;
+  quantity: number;
 }

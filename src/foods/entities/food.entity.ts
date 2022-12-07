@@ -48,7 +48,6 @@ export class Food {
   })
   proteines: number;
 
-  @ManyToMany(() => Meals)
-  @JoinTable()
+  @ManyToMany((type) => Meals)
   meals: Meals[];
 }

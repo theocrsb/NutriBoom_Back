@@ -3,8 +3,10 @@ import { Type } from 'src/types/entities/type.entity';
 import { Users } from 'src/users/entities/user.entity';
 import {
   Column,
+  CreateDateColumn,
   Entity,
   JoinTable,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -22,12 +24,15 @@ export class Meals {
   })
   name: string;
 
+  @CreateDateColumn({ type: 'timestamp' })
+  createdAt!: Date;
+
   @Column({
     nullable: false,
-    type: 'varchar',
-    length: 50,
+    type: 'int',
+    width: 10,
   })
-  date: string;
+  quantity: number;
 
   // @OneToMany(() => Users, (user) => user.meal)
   // users!: Users[];
@@ -41,4 +46,10 @@ export class Meals {
 
   @ManyToOne(() => Type, (type) => type.id)
   types: Type;
+
+  @ManyToMany((type) => Food, (food) => food.meals, {
+    cascade: ['insert', 'update'],
+  })
+  @JoinTable()
+  food: Food[];
 }
