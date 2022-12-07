@@ -7,8 +7,8 @@ async function bootstrap() {
   // ajout terme 'api' après http://localhost:8080/api/
   app.setGlobalPrefix('api');
   // changement du port 3000 avec le port 8080
-  //ajout CORS
   app.enableCors();
+  //ajout CORS
   await app.listen(8080);
 }
 bootstrap();
