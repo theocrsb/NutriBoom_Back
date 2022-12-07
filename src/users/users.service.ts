@@ -6,6 +6,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { Users } from './entities/user.entity';
 import { Role } from 'src/role/entities/role.entity';
 import { RoleService } from 'src/role/role.service';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -29,6 +30,14 @@ export class UsersService {
       throw new NotFoundException(`Pas un user !!!`);
     }
     console.log('apres MAJ .role', userCreate);
+    const saltOrRounds = 10;
+    const password = userCreate.password;
+    console.log('password: ', password);
+    const hash = await bcrypt.hash(password, saltOrRounds);
+    console.log('hash: ', hash);
+    userCreate.password = hash;
+    console.log('user create password: ', userCreate.password);
+    // const salt = await bcrypt.genSalt();
 
     // 1 - recuperer objet role . user classique (via repository)
     // 2- creer une instance de user a l'aide du repo user
