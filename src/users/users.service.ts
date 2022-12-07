@@ -30,11 +30,6 @@ export class UsersService {
     }
     console.log('apres MAJ .role', userCreate);
 
-    // const userInstance = new Users();
-    // console.log('userInstance', userInstance);
-    // userInstance.role = roleUser[0];
-    // console.log('roleUser', roleUser[0]);
-
     // 1 - recuperer objet role . user classique (via repository)
     // 2- creer une instance de user a l'aide du repo user
     // 3- update l'instance de user pour modifier sa proprieter role avec ce qui a ete recuperer a l'etape 1
