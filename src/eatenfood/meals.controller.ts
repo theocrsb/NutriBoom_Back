@@ -7,16 +7,16 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { MealsService } from './meals.service';
-import { CreateMealDto } from './dto/create-meal.dto';
-import { UpdateMealDto } from './dto/update-meal.dto';
+import { CreateEatenFoodDto } from './dto/create-meal.dto';
+import { UpdateEatenFoodDto } from './dto/update-meal.dto';
+import { EatenFoodService } from './meals.service';
 
 @Controller('meals')
-export class MealsController {
-  constructor(private readonly mealsService: MealsService) {}
+export class EatenFoodController {
+  constructor(private readonly mealsService: EatenFoodService) {}
 
   @Post()
-  create(@Body() createMealDto: CreateMealDto) {
+  create(@Body() createMealDto: CreateEatenFoodDto) {
     return this.mealsService.create(createMealDto);
   }
 
@@ -31,7 +31,7 @@ export class MealsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMealDto: UpdateMealDto) {
+  update(@Param('id') id: string, @Body() updateMealDto: UpdateEatenFoodDto) {
     return this.mealsService.update(id, updateMealDto);
   }
 

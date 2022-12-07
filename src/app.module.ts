@@ -19,6 +19,8 @@ import { Exercices } from './exercices/entities/exercice.entity';
 import { RoleModule } from './role/role.module';
 import { Role } from './role/entities/role.entity';
 import { AuthModule } from './auth/auth.module';
+import { EatenFoodModule } from './eatenfood/meals.module';
+import { EatenFood } from './eatenfood/entities/meal.entity';
 
 dotenv.config({ path: '.env' });
 
@@ -31,12 +33,12 @@ dotenv.config({ path: '.env' });
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [Users, Exercices, Activity, Meals, Type, Food, Role],
+      entities: [Users, Exercices, Activity, EatenFood, Type, Food, Role],
       synchronize: process.env.MODE === 'DEV' ? true : false,
     }),
     UsersModule,
     ActivityModule,
-    MealsModule,
+    EatenFoodModule,
     TypesModule,
     FoodsModule,
     ExercicesModule,

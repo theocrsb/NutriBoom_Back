@@ -13,7 +13,7 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class Meals {
+export class EatenFood {
   @PrimaryGeneratedColumn()
   id?: string;
 
