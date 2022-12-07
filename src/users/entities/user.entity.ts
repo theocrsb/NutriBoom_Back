@@ -80,15 +80,16 @@ export class Users {
   })
   password: string;
 
-  @OneToMany(() => Exercices, (exercices) => exercices.users)
+  @OneToMany(() => Exercices, (exercices) => exercices.users, { eager: true })
   exercices!: Exercices[];
 
-  @OneToMany(() => Meals, (meal) => meal.id)
+  @OneToMany(() => Meals, (meal) => meal.users, { eager: true })
   meals: Meals[];
 
   @ManyToOne(
     () => Role,
-    (role) => role.user,
+    (role) => role.users,
+    { eager: true },
     // , { nullable: false }
   )
   role: Role;

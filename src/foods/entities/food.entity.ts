@@ -47,7 +47,4 @@ export class Food {
     width: 10,
   })
   proteines: number;
-
-  @ManyToMany((type) => Meals)
-  meals: Meals[];
 }

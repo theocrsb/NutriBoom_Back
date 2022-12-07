@@ -14,5 +14,5 @@ export class Role {
   label: string;
 
   @OneToMany(() => Users, (user) => user.role)
-  user: Users[];
+  users: Users[];
 }

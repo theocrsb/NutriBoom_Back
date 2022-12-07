@@ -19,9 +19,6 @@ export class Type {
   })
   name: string;
 
-  @OneToMany(() => Meals, (meal) => meal.id)
+  @OneToMany(() => Meals, (meal) => meal.types)
   meals: Meals[];
-
-  //@ManyToOne(() => Meals, (meal) => meal.id, { eager:true })
-  //meals: Meals[];
 }

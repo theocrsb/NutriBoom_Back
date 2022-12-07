@@ -41,7 +41,7 @@ dotenv.config({ path: '.env' });
     FoodsModule,
     ExercicesModule,
     RoleModule,
-    AuthModule,
+    // AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

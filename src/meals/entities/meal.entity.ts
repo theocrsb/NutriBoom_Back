@@ -34,22 +34,13 @@ export class Meals {
   })
   quantity: number;
 
-  // @OneToMany(() => Users, (user) => user.meal)
-  // users!: Users[];
-
-  //   @ManyToOne(() => Food, (food) => food.id)
-  //   foods!: Food[];
-  //
-
-  @ManyToOne(() => Users, (user) => user.id)
+  @ManyToOne(() => Users, (user) => user.meals)
   users: Users;
 
-  @ManyToOne(() => Type, (type) => type.id)
+  @ManyToOne(() => Type, (type) => type.meals)
   types: Type;
 
-  @ManyToMany((type) => Food, (food) => food.meals, {
-    cascade: ['insert', 'update'],
-  })
+  @ManyToMany(() => Food, { eager: true })
   @JoinTable()
   food: Food[];
 }

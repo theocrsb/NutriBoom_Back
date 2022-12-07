@@ -23,9 +23,9 @@ export class Exercices {
   @Column()
   time!: number;
 
-  @ManyToOne(() => Activity, (acti) => acti.id)
+  @ManyToOne(() => Activity, (acti) => acti.exercices)
   activity!: Activity;
 
-  @ManyToOne(() => Users, (users) => users.id)
+  @ManyToOne(() => Users, (users) => users.exercices)
   users!: Users;
 }
