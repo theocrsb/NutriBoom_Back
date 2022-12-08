@@ -12,8 +12,6 @@ async function bootstrap() {
   // changement du port 3000 avec le port 8080
   app.enableCors();
   //ajout CORS
-  // //require(path.join(__dirname, 'auth.config'))(passport); //Load passport config
-  // //ajout passport
   await app.listen(8080);
 }
 bootstrap();

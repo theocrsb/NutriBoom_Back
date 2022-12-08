@@ -5,6 +5,9 @@ import { UsersModule } from '../users/users.module';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import * as dotenv from 'dotenv';
+import { AuthController } from './auth.controller';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Users } from 'src/users/entities/user.entity';
 // import { jwtConstants } from './constants';
 dotenv.config({ path: '.env' });
 @Module({
@@ -16,6 +19,7 @@ dotenv.config({ path: '.env' });
       signOptions: { expiresIn: '60s' },
     }),
   ],
+  controllers: [AuthController],
   providers: [AuthService, LocalStrategy],
   exports: [AuthService],
 })
