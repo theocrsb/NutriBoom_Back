@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
+
 import { AppService } from './app.service';
 // ajout typeORM module
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -20,6 +20,7 @@ import { EatenFoodModule } from './eatenfood/eatenfood.module';
 import { EatenFood } from './eatenfood/entities/eatenfood.entity';
 import { AuthModule } from './auth/auth.module';
 import { PassportModule } from '@nestjs/passport';
+import { AuthController } from './auth/auth.controller';
 
 dotenv.config({ path: '.env' });
 
@@ -45,7 +46,7 @@ dotenv.config({ path: '.env' });
     AuthModule,
     PassportModule,
   ],
-  controllers: [AppController],
+  controllers: [AuthController],
   providers: [AppService],
 })
 export class AppModule {}
