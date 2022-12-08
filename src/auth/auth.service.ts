@@ -28,6 +28,7 @@ export class AuthService {
 
   async login(userLogin: UserLoginDto) {
     const userFound = await this.userRepo.findOneBy({ email: userLogin.email });
+    console.log('userFound: ', userFound);
     if (
       userFound &&
       (await bcrypt.compare(userLogin.password, userFound.password))
@@ -37,6 +38,7 @@ export class AuthService {
         role: userFound.role.label,
         id: userFound.id,
       };
+      console.log('payload: ', payload);
       return {
         access_token: this.jwtService.sign(payload),
       };

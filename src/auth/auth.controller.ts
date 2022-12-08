@@ -23,7 +23,7 @@ export class AuthController {
     return this.authService.login(user);
   }
 
-  // @UseGuards(JwtAuthGuard)
+  // @UseGuards(LocalAuthGuard)
   // @Get('profile')
   // getProfile(@Request() req) {
   //   return req.user;
