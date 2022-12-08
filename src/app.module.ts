@@ -16,9 +16,9 @@ import { ExercicesModule } from './exercices/exercices.module';
 import { Exercices } from './exercices/entities/exercice.entity';
 import { RoleModule } from './role/role.module';
 import { Role } from './role/entities/role.entity';
-import { AuthModule } from './auth/auth.module';
 import { EatenFoodModule } from './eatenfood/eatenfood.module';
 import { EatenFood } from './eatenfood/entities/eatenfood.entity';
+import { AuthModule } from './auth/auth.module';
 
 dotenv.config({ path: '.env' });
 
@@ -41,7 +41,7 @@ dotenv.config({ path: '.env' });
     FoodsModule,
     ExercicesModule,
     RoleModule,
-    // AuthModule,
+    //AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
