@@ -19,6 +19,7 @@ import { Role } from './role/entities/role.entity';
 import { EatenFoodModule } from './eatenfood/eatenfood.module';
 import { EatenFood } from './eatenfood/entities/eatenfood.entity';
 import { AuthModule } from './auth/auth.module';
+import { PassportModule } from '@nestjs/passport';
 
 dotenv.config({ path: '.env' });
 
@@ -41,7 +42,8 @@ dotenv.config({ path: '.env' });
     FoodsModule,
     ExercicesModule,
     RoleModule,
-    //AuthModule,
+    AuthModule,
+    PassportModule,
   ],
   controllers: [AppController],
   providers: [AppService],
