@@ -37,8 +37,6 @@ export class UsersService {
     console.log('hash: ', hash);
     userCreate.password = hash;
     console.log('user create password: ', userCreate.password);
-    // const salt = await bcrypt.genSalt();
-
     // 1 - recuperer objet role . user classique (via repository)
     // 2- creer une instance de user a l'aide du repo user
     // 3- update l'instance de user pour modifier sa proprieter role avec ce qui a ete recuperer a l'etape 1
