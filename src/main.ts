@@ -13,6 +13,6 @@ async function bootstrap() {
   app.enableCors();
   //ajout CORS
   await app.listen(8080);
-  //ceci est un commentaire
+  //ceci est un commengtaire
 } // test2
 bootstrap();
