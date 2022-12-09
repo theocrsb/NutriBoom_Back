@@ -21,29 +21,25 @@ export class Food {
 
   @Column({
     nullable: false,
-    type: 'int',
-    width: 10,
+    type: 'float',
   })
   nombre_calories: number;
 
   @Column({
     nullable: false,
-    type: 'int',
-    width: 10,
+    type: 'float',
   })
   lipides: number;
 
   @Column({
     nullable: false,
-    type: 'int',
-    width: 10,
+    type: 'float',
   })
   glucides: number;
 
   @Column({
     nullable: false,
-    type: 'int',
-    width: 10,
+    type: 'float',
   })
   proteines: number;
 }

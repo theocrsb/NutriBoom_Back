@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Users } from 'src/users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreateExerciceDto } from './dto/create-exercice.dto';
 import { UpdateExerciceDto } from './dto/update-exercice.dto';
@@ -11,8 +12,15 @@ export class ExercicesService {
     @InjectRepository(Exercices)
     private activityRepository: Repository<Exercices>,
   ) {}
-  async create(createExerciceDto: CreateExerciceDto): Promise<Exercices> {
-    return await this.activityRepository.save(createExerciceDto);
+  async create(
+    createExerciceDto: CreateExerciceDto,
+    user: Users,
+  ): Promise<Exercices> {
+    const exo = {
+      ...createExerciceDto,
+      user,
+    };
+    return await this.activityRepository.save(exo);
   }
 
   async findAll(): Promise<Exercices[]> {

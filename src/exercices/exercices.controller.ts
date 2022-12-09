@@ -6,18 +6,23 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { ExercicesService } from './exercices.service';
 import { CreateExerciceDto } from './dto/create-exercice.dto';
 import { UpdateExerciceDto } from './dto/update-exercice.dto';
+import { GetUser } from 'src/auth/get-user.decorator';
+import { Users } from 'src/users/entities/user.entity';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('exercices')
 export class ExercicesController {
   constructor(private readonly exercicesService: ExercicesService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post()
-  create(@Body() createExerciceDto: CreateExerciceDto) {
-    return this.exercicesService.create(createExerciceDto);
+  create(@Body() createExerciceDto: CreateExerciceDto, @GetUser() user: Users) {
+    return this.exercicesService.create(createExerciceDto, user);
   }
   @Get()
   findAll() {
