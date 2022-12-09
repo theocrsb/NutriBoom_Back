@@ -21,6 +21,10 @@ export class AuthService {
     if (user && user.password === password) {
       const { password, ...result } = user;
       return result;
+      //if(!user) throw new BadRequestException();
+      //if(!await bcrypt.compare(password, user.password));
+      //throw new UnauthorizedException();
+      //return user
     }
     return null;
   }

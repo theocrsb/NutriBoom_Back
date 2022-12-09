@@ -11,6 +11,7 @@ import { LocalAuthGuard } from './local-auth.guard';
 import { AuthService } from './auth.service';
 import { Users } from 'src/users/entities/user.entity';
 import { UserLoginDto } from './dto/userLoginDto';
+import { JwtAuthGuard } from './jwt-auth.guard';
 
 @Controller()
 export class AuthController {
@@ -20,11 +21,12 @@ export class AuthController {
   @Post('auth/login')
   async login(@Body() user: UserLoginDto) {
     return this.authService.login(user);
+    //return await this.authService.generateToken(req.user)
   }
 
-  // @UseGuards(JwtAuthGuard)
-  // @Get('profile')
-  // getProfile(@Request() req) {
-  //   return req.user;
-  // }
+  @UseGuards(JwtAuthGuard)
+  @Get('auth/user')
+  async user(@Request() req): Promise<any> {
+    return req.user;
+  }
 }

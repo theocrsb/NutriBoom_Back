@@ -8,6 +8,7 @@ import * as dotenv from 'dotenv';
 import { AuthController } from './auth.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Users } from 'src/users/entities/user.entity';
+import { JwtStrategy } from './jwt-strategy';
 // import { jwtConstants } from './constants';
 dotenv.config({ path: '.env' });
 @Module({
@@ -16,11 +17,11 @@ dotenv.config({ path: '.env' });
     PassportModule,
     JwtModule.register({
       secret: process.env.SECRET_KEY,
-      signOptions: { expiresIn: '60s' },
+      signOptions: { expiresIn: '30s' },
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, LocalStrategy],
+  providers: [AuthService, LocalStrategy, JwtStrategy],
   exports: [AuthService],
 })
 export class AuthModule {}
