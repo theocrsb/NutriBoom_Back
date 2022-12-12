@@ -14,11 +14,13 @@ import { Users } from 'src/users/entities/user.entity';
 import { CreateEatenFoodDto } from './dto/create-eatenfood.dto';
 import { UpdateEatenFoodDto } from './dto/update-eatenfood.dto';
 import { EatenFoodService } from './eatenfood.service';
-
 @Controller('meals')
+// @UseGuards(JwtAuthGuard)
+// sur tout les routes
 export class EatenFoodController {
   constructor(private readonly mealsService: EatenFoodService) {}
 
+  //pensez a etre connecté pour recuperer l'utilisateur !!!
   @UseGuards(JwtAuthGuard)
   @Post()
   create(
@@ -30,8 +32,9 @@ export class EatenFoodController {
   }
 
   @Get()
-  findAll() {
-    return this.mealsService.findAll();
+  findAll(@GetUser() user: Users) {
+    console.log('user get all', user);
+    return this.mealsService.findAll(user);
   }
 
   @Get(':id')

@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Food } from 'src/foods/entities/food.entity';
 import { Users } from 'src/users/entities/user.entity';
@@ -26,7 +30,14 @@ export class EatenFoodService {
     return await this.eatenFoodRepository.save(eatenfood);
   }
 
-  async findAll(): Promise<EatenFood[]> {
+  async findAll(user: Users): Promise<EatenFood[]> {
+    console.log('user', user);
+    console.log('userlabel', user.role.label);
+    // if (user.role.label === 'admin') {
+    //   return await this.eatenFoodRepository.find();
+    // } else {
+    //   throw new UnauthorizedException(`Pas admin`);
+    // }
     return await this.eatenFoodRepository.find();
   }
 

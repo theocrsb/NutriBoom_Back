@@ -19,6 +19,7 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 export class ExercicesController {
   constructor(private readonly exercicesService: ExercicesService) {}
 
+  //pensez a etre connecté pour recuperer l'utilisateur !!!
   @UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() createExerciceDto: CreateExerciceDto, @GetUser() user: Users) {
