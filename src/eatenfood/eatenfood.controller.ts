@@ -6,7 +6,11 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
+import { GetUser } from 'src/auth/get-user.decorator';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { Users } from 'src/users/entities/user.entity';
 import { CreateEatenFoodDto } from './dto/create-eatenfood.dto';
 import { UpdateEatenFoodDto } from './dto/update-eatenfood.dto';
 import { EatenFoodService } from './eatenfood.service';
@@ -15,9 +19,14 @@ import { EatenFoodService } from './eatenfood.service';
 export class EatenFoodController {
   constructor(private readonly mealsService: EatenFoodService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post()
-  create(@Body() createMealDto: CreateEatenFoodDto) {
-    return this.mealsService.create(createMealDto);
+  create(
+    @Body() createEatenFoodDto: CreateEatenFoodDto,
+    @GetUser() user: Users,
+  ) {
+    console.log(user);
+    return this.mealsService.create(createEatenFoodDto, user);
   }
 
   @Get()
@@ -31,8 +40,11 @@ export class EatenFoodController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMealDto: UpdateEatenFoodDto) {
-    return this.mealsService.update(id, updateMealDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateEatenFoodDto: UpdateEatenFoodDto,
+  ) {
+    return this.mealsService.update(id, updateEatenFoodDto);
   }
 
   @Delete(':id')

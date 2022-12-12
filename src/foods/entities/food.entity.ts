@@ -1,9 +1,11 @@
+import { EatenFood } from 'src/eatenfood/entities/eatenfood.entity';
 import {
   Column,
   Entity,
   JoinTable,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -42,4 +44,7 @@ export class Food {
     type: 'float',
   })
   proteines: number;
+
+  @OneToMany(() => EatenFood, (eatenfood) => eatenfood.type, { eager: false })
+  eatenfood: EatenFood[];
 }

@@ -34,13 +34,16 @@ export class EatenFood {
   })
   quantity: number;
 
-  @ManyToOne(() => Users, (user) => user.eatenfood)
+  @ManyToOne(() => Users, (user) => user.eatenfood, { eager: false })
   users: Users;
 
-  @ManyToOne(() => Type, (type) => type.eatenfood)
-  types: Type;
+  @ManyToOne(() => Type, (type) => type.eatenfood, { eager: true })
+  type: Type;
 
-  @ManyToMany(() => Food, { eager: true })
-  @JoinTable()
-  food: Food[];
+  // @ManyToMany(() => Food, { eager: true })
+  // @JoinTable()
+  // food: Food[];
+
+  @ManyToOne(() => Food, (food) => food.eatenfood, { eager: true })
+  food: Food;
 }

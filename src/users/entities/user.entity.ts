@@ -84,9 +84,9 @@ export class Users {
   @OneToMany(() => Exercices, (exercices) => exercices.users, { eager: true })
   exercices!: Exercices[];
 
-  @OneToMany(() => EatenFood, (eatenfood) => eatenfood.users, { eager: true })
-  eatenfood: EatenFood[];
-
   @ManyToOne(() => Role, (role) => role.users, { eager: true })
   role: Role;
+
+  @OneToMany(() => EatenFood, (eatenfood) => eatenfood.users, { eager: true })
+  eatenfood: EatenFood[];
 }

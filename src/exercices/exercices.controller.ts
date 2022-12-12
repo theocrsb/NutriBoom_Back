@@ -22,6 +22,7 @@ export class ExercicesController {
   @UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() createExerciceDto: CreateExerciceDto, @GetUser() user: Users) {
+    console.log('controller exo', user);
     return this.exercicesService.create(createExerciceDto, user);
   }
   @Get()

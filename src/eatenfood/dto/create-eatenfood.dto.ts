@@ -6,6 +6,6 @@ export class CreateEatenFoodDto {
   name: string;
   quantity: number;
   users: Users;
-  types: Type;
-  food: Food[];
+  type?: Type;
+  food?: Food;
 }

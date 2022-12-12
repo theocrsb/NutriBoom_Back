@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Food } from 'src/foods/entities/food.entity';
+import { Users } from 'src/users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreateEatenFoodDto } from './dto/create-eatenfood.dto';
 import { UpdateEatenFoodDto } from './dto/update-eatenfood.dto';
@@ -10,19 +11,27 @@ import { EatenFood } from './entities/eatenfood.entity';
 export class EatenFoodService {
   constructor(
     @InjectRepository(EatenFood)
-    private EatenFoodRepository: Repository<EatenFood>,
+    private eatenFoodRepository: Repository<EatenFood>,
   ) {}
 
-  async create(createMealDto: CreateEatenFoodDto): Promise<EatenFood> {
-    return await this.EatenFoodRepository.save(createMealDto);
+  async create(
+    createEatenFoodDto: CreateEatenFoodDto,
+    user: Users,
+  ): Promise<EatenFood> {
+    const users = {
+      id: user.id,
+    };
+    const eatenfood = { ...createEatenFoodDto, users };
+    console.log('createEatenFoodDto', createEatenFoodDto);
+    return await this.eatenFoodRepository.save(eatenfood);
   }
 
   async findAll(): Promise<EatenFood[]> {
-    return await this.EatenFoodRepository.find();
+    return await this.eatenFoodRepository.find();
   }
 
   async findOne(id: string): Promise<EatenFood> {
-    const mealFound = await this.EatenFoodRepository.findOneBy({ id: id });
+    const mealFound = await this.eatenFoodRepository.findOneBy({ id: id });
     if (!mealFound) {
       throw new NotFoundException(`Pas d'activités avec l'id: ${id}`);
     }
@@ -31,21 +40,21 @@ export class EatenFoodService {
 
   async update(
     id: string,
-    updateMealDto: UpdateEatenFoodDto,
+    updateEatenFoodDto: UpdateEatenFoodDto,
   ): Promise<EatenFood> {
     const updateMeal = await this.findOne(id);
     if (updateMeal.name !== undefined) {
-      updateMeal.name = updateMealDto.name;
+      updateMeal.name = updateEatenFoodDto.name;
     }
 
     if (updateMeal.createdAt !== undefined) {
-      updateMeal.createdAt = updateMealDto.date;
+      updateMeal.createdAt = updateEatenFoodDto.date;
     }
-    return await this.EatenFoodRepository.save(updateMeal);
+    return await this.eatenFoodRepository.save(updateMeal);
   }
 
   async remove(id: string): Promise<string> {
-    const result = await this.EatenFoodRepository.delete({ id });
+    const result = await this.eatenFoodRepository.delete({ id });
     if (result.affected === 0) {
       throw new NotFoundException(`Pas d'activités avec l'id: ${id}`);
     }

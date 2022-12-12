@@ -19,6 +19,6 @@ export class Type {
   })
   name: string;
 
-  @OneToMany(() => EatenFood, (eatenfood) => eatenfood.types)
+  @OneToMany(() => EatenFood, (eatenfood) => eatenfood.type, { eager: false })
   eatenfood: EatenFood[];
 }
