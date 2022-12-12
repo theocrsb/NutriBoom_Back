@@ -26,14 +26,9 @@ export class Activity {
   })
   conso_cal_1h: number;
 
-  // @Column({
-  //   nullable: false,
-  //   type: 'int',
-  //   width: 100,
-  // })
-  // time_minutes: number;
-
   // Ajout relation onetomany avec la table Users
-  @OneToMany(() => Exercices, (exercices) => exercices.activity)
+  @OneToMany(() => Exercices, (exercices) => exercices.activity, {
+    eager: false,
+  })
   exercices!: Exercices[];
 }

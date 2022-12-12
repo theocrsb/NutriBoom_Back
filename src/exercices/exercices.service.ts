@@ -16,11 +16,15 @@ export class ExercicesService {
     createExerciceDto: CreateExerciceDto,
     user: Users,
   ): Promise<Exercices> {
-    const exo = {
-      ...createExerciceDto,
-      user,
+    const users = {
+      id: user.id,
     };
-    return await this.activityRepository.save(exo);
+    const exercices = {
+      ...createExerciceDto,
+      users,
+    };
+    console.log('exo', exercices);
+    return await this.activityRepository.save(exercices);
   }
 
   async findAll(): Promise<Exercices[]> {

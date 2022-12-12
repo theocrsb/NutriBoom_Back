@@ -17,15 +17,16 @@ export class Exercices {
   @CreateDateColumn({ type: 'timestamp' })
   createdAt!: Date;
 
-  // @UpdateDateColumn({ type: 'timestamp' })
-  // updatedAt!: Date;
-
   @Column()
   time!: number;
 
-  @ManyToOne(() => Activity, (acti) => acti.exercices)
+  @ManyToOne(() => Activity, (acti) => acti.exercices, {
+    eager: true,
+  })
   activity!: Activity;
 
-  @ManyToOne(() => Users, (users) => users.exercices)
+  @ManyToOne(() => Users, (users) => users.exercices, {
+    eager: false,
+  })
   users!: Users;
 }
