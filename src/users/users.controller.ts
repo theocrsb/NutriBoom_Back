@@ -12,7 +12,6 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { Roles } from 'src/auth/role.decorator';
 import { Role } from 'src/role/entities/role.entity';
 import { CreateRoleDto } from 'src/role/dto/create-role.dto';
 
