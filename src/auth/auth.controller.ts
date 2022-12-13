@@ -5,6 +5,7 @@ import {
   Post,
   UseGuards,
   Body,
+  BadRequestException,
 } from '@nestjs/common';
 // import { JwtAuthGuard } from './auth/jwt-auth.guard';
 // import { LocalAuthGuard } from './local-auth.guard';
@@ -20,7 +21,14 @@ export class AuthController {
   //   @UseGuards(LocalAuthGuard)
   @Post('auth/login')
   async login(@Body() user: UserLoginDto) {
-    return this.authService.login(user);
+    if (user.email && user.password) {
+      return this.authService.login(user);
+    } else {
+      throw new BadRequestException(
+        `Les champs email et/ou password n'ont pas été renseignés correctement!`,
+      );
+    }
+
     //return await this.authService.generateToken(req.user)
   }
 

@@ -64,7 +64,7 @@ export class EatenFoodService {
     return await this.eatenFoodRepository.save(updateMeal);
   }
 
-  async remove(id: string): Promise<string> {
+  async remove(id: string, user: Users): Promise<string> {
     const result = await this.eatenFoodRepository.delete({ id });
     if (result.affected === 0) {
       throw new NotFoundException(`Pas d'activités avec l'id: ${id}`);

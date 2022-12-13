@@ -8,6 +8,7 @@ import {
   Delete,
   HttpStatus,
   HttpException,
+  BadRequestException,
 } from '@nestjs/common';
 import { ActivityService } from './activity.service';
 import { CreateActivityDto } from './dto/create-activity.dto';
@@ -19,7 +20,13 @@ export class ActivityController {
 
   @Post()
   create(@Body() createActivityDto: CreateActivityDto) {
-    return this.activityService.create(createActivityDto);
+    if (createActivityDto.name && createActivityDto.conso_cal_1h) {
+      return this.activityService.create(createActivityDto);
+    } else {
+      throw new BadRequestException(
+        `Veuillez remplir les champs correctement !`,
+      );
+    }
   }
 
   @Get()

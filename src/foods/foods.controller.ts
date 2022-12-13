@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  BadRequestException,
 } from '@nestjs/common';
 import { FoodsService } from './foods.service';
 import { CreateFoodDto } from './dto/create-food.dto';
@@ -17,7 +18,19 @@ export class FoodsController {
 
   @Post()
   create(@Body() createFoodDto: CreateFoodDto) {
-    return this.foodsService.create(createFoodDto);
+    if (
+      createFoodDto.name &&
+      createFoodDto.nombre_calories &&
+      createFoodDto.lipides &&
+      createFoodDto.glucides &&
+      createFoodDto.proteines
+    ) {
+      return this.foodsService.create(createFoodDto);
+    } else {
+      throw new BadRequestException(
+        `Veuillez remplir tous les champs correctement !`,
+      );
+    }
   }
 
   @Get()

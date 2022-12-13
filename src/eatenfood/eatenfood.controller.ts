@@ -57,7 +57,7 @@ export class EatenFoodController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.mealsService.remove(id);
+  remove(@Param('id') id: string, @GetUser() user: Users) {
+    return this.mealsService.remove(id, user);
   }
 }
