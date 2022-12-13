@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Injectable,
   NotFoundException,
   UnauthorizedException,
@@ -73,6 +74,8 @@ export class EatenFoodService {
   ): Promise<EatenFood> {
     const query = this.eatenFoodRepository.createQueryBuilder();
     query.where({ id: id }).andWhere({ users: user });
+    const patch = await query.getOne();
+    console.log(!patch);
     if (!query) {
       throw new NotFoundException(
         `Pas d'aliment consommé modifiable avec l'id: ${id}`,
@@ -80,8 +83,15 @@ export class EatenFoodService {
     }
     // return query.getOne();
     const updateMeal = await this.findOne(id, user);
-    if (updateMeal.name !== undefined) {
+    if (updateMeal.name !== undefined || null) {
       updateMeal.name = updateEatenFoodDto.name;
+    }
+    if (updateMeal.quantity !== undefined || null) {
+      updateMeal.quantity = updateEatenFoodDto.quantity;
+    } else {
+      throw new BadRequestException(
+        `Veuillez renseigner le(s) champs nom et/ou quantité correctement!`,
+      );
     }
 
     return await this.eatenFoodRepository.save(updateMeal);
