@@ -62,6 +62,14 @@ export class EatenFoodService {
     updateEatenFoodDto: UpdateEatenFoodDto,
     user: Users,
   ): Promise<EatenFood> {
+    const query = this.eatenFoodRepository.createQueryBuilder();
+    query.where({ id: id }).andWhere({ users: user });
+    if (!query) {
+      throw new NotFoundException(
+        `Pas d'aliment consommé modifiable avec l'id: ${id}`,
+      );
+    }
+    // return query.getOne();
     const updateMeal = await this.findOne(id, user);
     if (updateMeal.name !== undefined) {
       updateMeal.name = updateEatenFoodDto.name;
@@ -71,10 +79,15 @@ export class EatenFoodService {
   }
 
   async remove(id: string, user: Users): Promise<string> {
+    const query = this.eatenFoodRepository.createQueryBuilder();
+    query.where({ id: id }).andWhere({ users: user });
+    if (!query) {
+      throw new NotFoundException(`Pas d'aliment consommé  avec l'id: ${id}`);
+    }
     const result = await this.eatenFoodRepository.delete({ id });
     if (result.affected === 0) {
-      throw new NotFoundException(`Pas d'activités avec l'id: ${id}`);
+      throw new NotFoundException(`Pas d'aliment consommé avec l'id: ${id}`);
     }
-    return `l'activité à l'id: ${id} a été supprimée!`;
+    return `l'aliment à l'id: ${id} a été supprimée!`;
   }
 }
