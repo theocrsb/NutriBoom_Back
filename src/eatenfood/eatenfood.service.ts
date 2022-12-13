@@ -58,9 +58,6 @@ export class EatenFoodService {
       updateMeal.name = updateEatenFoodDto.name;
     }
 
-    if (updateMeal.createdAt !== undefined) {
-      updateMeal.createdAt = updateEatenFoodDto.date;
-    }
     return await this.eatenFoodRepository.save(updateMeal);
   }
 

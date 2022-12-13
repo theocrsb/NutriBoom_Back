@@ -24,7 +24,7 @@ export class EatenFood {
   })
   name: string;
 
-  @CreateDateColumn({ type: 'timestamp' })
+  @CreateDateColumn({ type: 'timestamptz' })
   createdAt!: Date;
 
   @Column({
