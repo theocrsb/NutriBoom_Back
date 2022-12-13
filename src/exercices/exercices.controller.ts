@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  BadRequestException,
 } from '@nestjs/common';
 import { ExercicesService } from './exercices.service';
 import { CreateExerciceDto } from './dto/create-exercice.dto';
@@ -23,8 +24,13 @@ export class ExercicesController {
   @UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() createExerciceDto: CreateExerciceDto, @GetUser() user: Users) {
-    console.log('controller exo', user);
-    return this.exercicesService.create(createExerciceDto, user);
+    if (createExerciceDto.activity && createExerciceDto.time) {
+      return this.exercicesService.create(createExerciceDto, user);
+    } else {
+      throw new BadRequestException(
+        `Veuillez remplir tous les champs correctement !`,
+      );
+    }
   }
   @Get()
   findAll() {

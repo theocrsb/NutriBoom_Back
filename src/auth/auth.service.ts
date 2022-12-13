@@ -44,7 +44,7 @@ export class AuthService {
       };
     } else {
       throw new UnauthorizedException(
-        'Please check your credentials and try again.',
+        'Le couple email/password est incorrect!',
       );
     }
   }

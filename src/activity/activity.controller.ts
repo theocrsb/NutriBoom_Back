@@ -6,6 +6,9 @@ import {
   Patch,
   Param,
   Delete,
+  HttpStatus,
+  HttpException,
+  BadRequestException,
 } from '@nestjs/common';
 import { ActivityService } from './activity.service';
 import { CreateActivityDto } from './dto/create-activity.dto';
@@ -17,29 +20,35 @@ export class ActivityController {
 
   @Post()
   create(@Body() createActivityDto: CreateActivityDto) {
-    return this.activityService.create(createActivityDto);
+    if (createActivityDto.name && createActivityDto.conso_cal_1h) {
+      return this.activityService.create(createActivityDto);
+    } else {
+      throw new BadRequestException(
+        `Veuillez remplir les champs correctement !`,
+      );
+    }
   }
 
   @Get()
-  findAll() {
-    return this.activityService.findAll();
+  async findAll() {
+    return await this.activityService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.activityService.findOne(id);
+  async findOne(@Param('id') id: string) {
+    return await this.activityService.findOne(id);
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Param('id') id: string,
     @Body() updateActivityDto: UpdateActivityDto,
   ) {
-    return this.activityService.update(id, updateActivityDto);
+    return await this.activityService.update(id, updateActivityDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.activityService.remove(id);
+  async remove(@Param('id') id: string) {
+    return await this.activityService.remove(id);
   }
 }

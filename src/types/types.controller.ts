@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  BadRequestException,
 } from '@nestjs/common';
 import { TypesService } from './types.service';
 import { CreateTypeDto } from './dto/create-type.dto';
@@ -17,7 +18,11 @@ export class TypesController {
 
   @Post()
   create(@Body() createTypeDto: CreateTypeDto) {
-    return this.typesService.create(createTypeDto);
+    if (createTypeDto.name) {
+      return this.typesService.create(createTypeDto);
+    } else {
+      throw new BadRequestException(`Veuillez indiquer le type de repas !`);
+    }
   }
 
   @Get()
