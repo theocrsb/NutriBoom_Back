@@ -34,14 +34,14 @@ export class ExercicesController {
 
   //USER avec getUser
   @Get()
-  findAll() {
-    return this.exercicesService.findAll();
+  findAll(@GetUser() user: Users) {
+    return this.exercicesService.findAll(user);
   }
 
   //USER avec getUser
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.exercicesService.findOne(+id);
+  findOne(@Param('id') id: string, @GetUser() user: Users) {
+    return this.exercicesService.findOne(+id, user);
   }
 
   //USER avec getUser
@@ -49,8 +49,9 @@ export class ExercicesController {
   update(
     @Param('id') id: string,
     @Body() updateExerciceDto: UpdateExerciceDto,
+    @GetUser() user: Users,
   ) {
-    return this.exercicesService.update(+id, updateExerciceDto);
+    return this.exercicesService.update(+id, updateExerciceDto, user);
   }
 
   //USER avec getUser

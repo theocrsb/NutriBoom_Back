@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Users } from 'src/users/entities/user.entity';
 import { Repository } from 'typeorm';
@@ -27,24 +31,52 @@ export class ExercicesService {
     return await this.activityRepository.save(exercices);
   }
   // findall dans le User by ID
-  async findAll(): Promise<Exercices[]> {
-    return await this.activityRepository.find();
+  async findAll(user: Users): Promise<Exercices[]> {
+    const query = this.activityRepository.createQueryBuilder();
+    query.where({ users: user });
+    return query.getMany();
   }
 
-  async findOne(id: number): Promise<Exercices> {
-    const exerciseFound = await this.activityRepository.findOneBy({ id: id });
-    if (!exerciseFound) {
-      throw new NotFoundException(`Pas d'activités avec l'id: ${id}`);
+  async findOne(id: number, user: Users): Promise<Exercices> {
+    const queryExo = await this.activityRepository.createQueryBuilder();
+    queryExo.where({ id: id }).andWhere({ users: user });
+    const found = await queryExo.getOne();
+
+    if (!found) {
+      throw new NotFoundException(`Pas d'aliment consommé avec l'id: ${id}`);
+    } else {
+      return found;
     }
-    return exerciseFound;
   }
 
   async update(
     id: number,
     updateExerciceDto: UpdateExerciceDto,
+    user: Users,
   ): Promise<Exercices> {
-    const updateExercices = await this.findOne(id);
-    return await this.activityRepository.save(updateExercices);
+    const query = this.activityRepository.createQueryBuilder();
+    query.where({ id: id }).andWhere({ users: user });
+    const patch = await query.getOne();
+    console.log(!patch);
+    if (!query) {
+      throw new NotFoundException(
+        `Pas d'aliment consommé modifiable avec l'id: ${id}`,
+      );
+    }
+    // return query.getOne();
+    const updateMeal = await this.findOne(id, user);
+    if (updateMeal.time !== undefined || null) {
+      updateMeal.time = updateExerciceDto.time;
+    }
+    if (updateMeal.activity !== undefined || null) {
+      updateMeal.activity = updateExerciceDto.activity;
+    } else {
+      throw new BadRequestException(
+        `Veuillez renseigner le(s) champs nom et/ou quantité correctement!`,
+      );
+    }
+
+    return await this.activityRepository.save(updateMeal);
   }
 
   async remove(id: number): Promise<string> {
