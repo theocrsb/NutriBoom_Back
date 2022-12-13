@@ -34,13 +34,13 @@ export class EatenFoodService {
     console.log('user', user);
     console.log('userlabel', user.role.label);
     // if (user.role.label === 'admin') {
-    //   return await this.eatenFoodRepository.find();
-    // } else {
-    //   throw new UnauthorizedException(`Pas admin`);
-    // }
     const query = this.eatenFoodRepository.createQueryBuilder();
     query.where({ users: user });
     return query.getMany();
+    // return await this.eatenFoodRepository.find();
+    //} else {
+    //throw new UnauthorizedException(`Pas admin`);
+    //}
   }
 
   async findOne(id: string, user: Users): Promise<EatenFood> {
