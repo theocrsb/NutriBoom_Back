@@ -15,13 +15,13 @@ import { CreateEatenFoodDto } from './dto/create-eatenfood.dto';
 import { UpdateEatenFoodDto } from './dto/update-eatenfood.dto';
 import { EatenFoodService } from './eatenfood.service';
 @Controller('meals')
-// @UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard)
 // sur tout les routes
 export class EatenFoodController {
   constructor(private readonly mealsService: EatenFoodService) {}
 
   //pensez a etre connecté pour recuperer l'utilisateur !!!
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Post()
   create(
     @Body() createEatenFoodDto: CreateEatenFoodDto,
