@@ -98,15 +98,15 @@ export class EatenFoodService {
   }
 
   async remove(id: string, user: Users): Promise<string> {
-    const query = this.eatenFoodRepository.createQueryBuilder();
-    query.where({ id: id }).andWhere({ users: user });
-    if (!query) {
-      throw new NotFoundException(`Pas d'aliment consommé  avec l'id: ${id}`);
-    }
-    const result = await this.eatenFoodRepository.delete({ id });
-    if (result.affected === 0) {
+    const querytest = await this.eatenFoodRepository.createQueryBuilder();
+    querytest.where({ id: id }).andWhere({ users: user });
+    const found = await querytest.getOne();
+    //
+    if (!found) {
       throw new NotFoundException(`Pas d'aliment consommé avec l'id: ${id}`);
+    } else {
+      await this.eatenFoodRepository.delete({ id });
+      return 'ok cool';
     }
-    return `l'aliment à l'id: ${id} a été supprimée!`;
   }
 }
