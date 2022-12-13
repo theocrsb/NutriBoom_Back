@@ -45,6 +45,6 @@ export class Food {
   })
   proteines: number;
 
-  @OneToMany(() => EatenFood, (eatenfood) => eatenfood.type, { eager: false })
+  @OneToMany(() => EatenFood, (eatenfood) => eatenfood.food, { eager: false })
   eatenfood: EatenFood[];
 }

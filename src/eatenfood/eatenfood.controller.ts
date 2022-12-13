@@ -16,13 +16,13 @@ import { CreateEatenFoodDto } from './dto/create-eatenfood.dto';
 import { UpdateEatenFoodDto } from './dto/update-eatenfood.dto';
 import { EatenFoodService } from './eatenfood.service';
 @Controller('meals')
-// @UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard)
 // sur tout les routes
 export class EatenFoodController {
   constructor(private readonly mealsService: EatenFoodService) {}
 
   //pensez a etre connecté pour recuperer l'utilisateur !!!
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Post()
   create(
     @Body() createEatenFoodDto: CreateEatenFoodDto,
@@ -44,16 +44,17 @@ export class EatenFoodController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.mealsService.findOne(id);
+  findOne(@Param('id') id: string, @GetUser() user: Users) {
+    return this.mealsService.findOne(id, user);
   }
 
   @Patch(':id')
   update(
     @Param('id') id: string,
     @Body() updateEatenFoodDto: UpdateEatenFoodDto,
+    @GetUser() user: Users,
   ) {
-    return this.mealsService.update(id, updateEatenFoodDto);
+    return this.mealsService.update(id, updateEatenFoodDto, user);
   }
 
   @Delete(':id')
