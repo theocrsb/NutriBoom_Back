@@ -1,9 +1,11 @@
 import {
   BadRequestException,
+  Body,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Activity } from 'src/activity/entities/activity.entity';
 import { Users } from 'src/users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreateExerciceDto } from './dto/create-exercice.dto';
@@ -14,7 +16,9 @@ import { Exercices } from './entities/exercice.entity';
 export class ExercicesService {
   constructor(
     @InjectRepository(Exercices)
-    private activityRepository: Repository<Exercices>,
+    private exoRepository: Repository<Exercices>,
+    @InjectRepository(Activity)
+    private actiRepository: Repository<Activity>,
   ) {}
   async create(
     createExerciceDto: CreateExerciceDto,
@@ -28,22 +32,23 @@ export class ExercicesService {
       users,
     };
     console.log('exo', exercices);
-    return await this.activityRepository.save(exercices);
+    return await this.exoRepository.save(exercices);
   }
   // findall dans le User by ID
   async findAll(user: Users): Promise<Exercices[]> {
-    const query = this.activityRepository.createQueryBuilder();
+    //return this.exoRepository.find();
+    const query = this.exoRepository.createQueryBuilder();
     query.where({ users: user });
     return query.getMany();
   }
 
   async findOne(id: number, user: Users): Promise<Exercices> {
-    const queryExo = await this.activityRepository.createQueryBuilder();
+    const queryExo = await this.exoRepository.createQueryBuilder();
     queryExo.where({ id: id }).andWhere({ users: user });
     const found = await queryExo.getOne();
 
     if (!found) {
-      throw new NotFoundException(`Pas d'aliment consommé avec l'id: ${id}`);
+      throw new NotFoundException(`Pas d'exercices avec l'id: ${id}`);
     } else {
       return found;
     }
@@ -54,41 +59,54 @@ export class ExercicesService {
     updateExerciceDto: UpdateExerciceDto,
     user: Users,
   ): Promise<Exercices> {
-    const query = this.activityRepository.createQueryBuilder();
+    const query = this.exoRepository.createQueryBuilder();
     query.where({ id: id }).andWhere({ users: user });
     const patch = await query.getOne();
     console.log(!patch);
     if (!query) {
       throw new NotFoundException(
-        `Pas d'aliment consommé modifiable avec l'id: ${id}`,
+        `Pas d'exercices modifiable avec l'id: ${id}`,
       );
     }
-    // return query.getOne();
-    const updateMeal = await this.findOne(id, user);
-    if (updateMeal.time !== undefined || null) {
-      updateMeal.time = updateExerciceDto.time;
+
+    const updateExo = await this.findOne(id, user);
+    const activity = await this.actiRepository.findOneBy({
+      id: updateExerciceDto.activity.id,
+    });
+    if (activity) {
+      updateExo.activity = activity;
+      this.exoRepository.save(updateExo);
     }
-    if (updateMeal.activity !== undefined || null) {
-      updateMeal.activity = updateExerciceDto.activity;
+    console.log('updateExo----------', updateExo);
+    console.log('updateExotime', updateExo.time);
+    // activity non recuperer car eager true du coté user.
+    // Pour changer l'activité delete
+    //possiblité d'update uniquement le time
+    console.log('updateExoacti', updateExo.activity);
+    if (updateExo.time !== undefined || null) {
+      updateExo.time = updateExerciceDto.time;
+    }
+    if (updateExo.activity) {
+      updateExo.activity = updateExerciceDto.activity;
     } else {
       throw new BadRequestException(
         `Veuillez renseigner le(s) champs nom et/ou quantité correctement!`,
       );
     }
 
-    return await this.activityRepository.save(updateMeal);
+    return await this.exoRepository.save(updateExo);
   }
 
   async remove(id: number, user: Users): Promise<string> {
-    const queryRemove = await this.activityRepository.createQueryBuilder();
+    const queryRemove = await this.exoRepository.createQueryBuilder();
     queryRemove.where({ id: id }).andWhere({ users: user });
     const found = await queryRemove.getOne();
     //
     if (!found) {
-      throw new NotFoundException(`Pas d'activtés avec l'id: ${id}`);
+      throw new NotFoundException(`Pas d'exercices avec l'id: ${id}`);
     } else {
-      await this.activityRepository.delete({ id });
-      return 'ok cool';
+      await this.exoRepository.delete({ id });
+      return 'exercices supprimé !!!';
     }
   }
 }

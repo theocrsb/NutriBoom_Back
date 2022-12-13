@@ -30,5 +30,5 @@ export class Activity {
   @OneToMany(() => Exercices, (exercices) => exercices.activity, {
     eager: false,
   })
-  exercices!: Exercices[];
+  exercices: Exercices[];
 }
