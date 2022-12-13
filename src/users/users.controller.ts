@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  BadRequestException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -19,7 +20,23 @@ export class UsersController {
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+    if (
+      createUserDto.firstname &&
+      createUserDto.lastname &&
+      createUserDto.age &&
+      createUserDto.email &&
+      createUserDto.gender &&
+      createUserDto.height &&
+      createUserDto.weight &&
+      createUserDto.password &&
+      createUserDto.ratio
+    ) {
+      return this.usersService.create(createUserDto);
+    } else {
+      throw new BadRequestException(
+        `Veuillez remplir tous les champs correctement !`,
+      );
+    }
   }
   // @UseGuards(JwtAuthGuard)
   @Get()
