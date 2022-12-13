@@ -26,7 +26,7 @@ export class ExercicesService {
     console.log('exo', exercices);
     return await this.activityRepository.save(exercices);
   }
-
+  // findall dans le User by ID
   async findAll(): Promise<Exercices[]> {
     return await this.activityRepository.find();
   }

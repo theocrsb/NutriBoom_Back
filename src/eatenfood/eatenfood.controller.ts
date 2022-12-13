@@ -38,16 +38,17 @@ export class EatenFoodController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.mealsService.findOne(id);
+  findOne(@Param('id') id: string, @GetUser() user: Users) {
+    return this.mealsService.findOne(id, user);
   }
 
   @Patch(':id')
   update(
     @Param('id') id: string,
     @Body() updateEatenFoodDto: UpdateEatenFoodDto,
+    @GetUser() user: Users,
   ) {
-    return this.mealsService.update(id, updateEatenFoodDto);
+    return this.mealsService.update(id, updateEatenFoodDto, user);
   }
 
   @Delete(':id')

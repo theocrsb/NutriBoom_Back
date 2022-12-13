@@ -35,6 +35,7 @@ dotenv.config({ path: '.env' });
       database: process.env.DB_NAME,
       entities: [Users, Exercices, Activity, EatenFood, Type, Food, Role],
       synchronize: process.env.MODE === 'DEV' ? true : false,
+      logging: false,
     }),
     UsersModule,
     ActivityModule,
