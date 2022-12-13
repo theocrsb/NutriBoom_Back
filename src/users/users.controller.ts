@@ -18,6 +18,7 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  //all persons
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
     if (
@@ -38,21 +39,25 @@ export class UsersController {
       );
     }
   }
-  // @UseGuards(JwtAuthGuard)
+  //ADMIN
   @Get()
   findAll() {
     return this.usersService.findAll();
   }
 
+  //USER avec GetUser
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.usersService.findOne(id);
   }
 
+  //USER avec GetUser
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(id, updateUserDto);
   }
+
+  //USER avec GetUser
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {

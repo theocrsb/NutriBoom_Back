@@ -16,6 +16,7 @@ import { UpdateFoodDto } from './dto/update-food.dto';
 export class FoodsController {
   constructor(private readonly foodsService: FoodsService) {}
 
+  //ADMIN
   @Post()
   create(@Body() createFoodDto: CreateFoodDto) {
     if (
@@ -33,21 +34,25 @@ export class FoodsController {
     }
   }
 
+  //USER sans getUser
   @Get()
   findAll() {
     return this.foodsService.findAll();
   }
 
+  //USER sans getUser
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.foodsService.findOne(id);
   }
 
+  //ADMIN
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateFoodDto: UpdateFoodDto) {
     return this.foodsService.update(id, updateFoodDto);
   }
 
+  //ADMIN
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.foodsService.remove(id);

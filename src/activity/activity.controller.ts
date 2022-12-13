@@ -17,7 +17,7 @@ import { UpdateActivityDto } from './dto/update-activity.dto';
 @Controller('activity')
 export class ActivityController {
   constructor(private readonly activityService: ActivityService) {}
-
+  //ADMIN
   @Post()
   create(@Body() createActivityDto: CreateActivityDto) {
     if (createActivityDto.name && createActivityDto.conso_cal_1h) {
@@ -28,17 +28,17 @@ export class ActivityController {
       );
     }
   }
-
+  //USER sans getUser
   @Get()
   async findAll() {
     return await this.activityService.findAll();
   }
-
+  //USER sans getUser
   @Get(':id')
   async findOne(@Param('id') id: string) {
     return await this.activityService.findOne(id);
   }
-
+  //ADMIN
   @Patch(':id')
   async update(
     @Param('id') id: string,
@@ -46,7 +46,7 @@ export class ActivityController {
   ) {
     return await this.activityService.update(id, updateActivityDto);
   }
-
+  //ADMIN
   @Delete(':id')
   async remove(@Param('id') id: string) {
     return await this.activityService.remove(id);

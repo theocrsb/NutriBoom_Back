@@ -16,6 +16,7 @@ import { UpdateTypeDto } from './dto/update-type.dto';
 export class TypesController {
   constructor(private readonly typesService: TypesService) {}
 
+  //ADMIN
   @Post()
   create(@Body() createTypeDto: CreateTypeDto) {
     if (createTypeDto.name) {
@@ -25,21 +26,25 @@ export class TypesController {
     }
   }
 
+  //ADMIN
   @Get()
   findAll() {
     return this.typesService.findAll();
   }
 
+  //ADMIN
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.typesService.findOne(id);
   }
 
+  //ADMIN
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateTypeDto: UpdateTypeDto) {
     return this.typesService.update(id, updateTypeDto);
   }
 
+  //ADMIN
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.typesService.remove(id);

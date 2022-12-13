@@ -18,7 +18,6 @@ import { JwtAuthGuard } from './jwt-auth.guard';
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  //   @UseGuards(LocalAuthGuard)
   @Post('auth/login')
   async login(@Body() user: UserLoginDto) {
     if (user.email && user.password) {
@@ -28,13 +27,5 @@ export class AuthController {
         `Les champs email et/ou password n'ont pas été renseignés correctement!`,
       );
     }
-
-    //return await this.authService.generateToken(req.user)
   }
-
-  // @UseGuards(LocalAuthGuard)
-  // @Get('profile')
-  // getProfile(@Request() req) {
-  //   return req.user;
-  // }
 }
