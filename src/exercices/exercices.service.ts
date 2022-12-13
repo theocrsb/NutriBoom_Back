@@ -79,7 +79,16 @@ export class ExercicesService {
     return await this.activityRepository.save(updateMeal);
   }
 
-  async remove(id: number): Promise<string> {
-    return `This action removes a #${id} exercice`;
+  async remove(id: number, user: Users): Promise<string> {
+    const queryRemove = await this.activityRepository.createQueryBuilder();
+    queryRemove.where({ id: id }).andWhere({ users: user });
+    const found = await queryRemove.getOne();
+    //
+    if (!found) {
+      throw new NotFoundException(`Pas d'activtés avec l'id: ${id}`);
+    } else {
+      await this.activityRepository.delete({ id });
+      return 'ok cool';
+    }
   }
 }
