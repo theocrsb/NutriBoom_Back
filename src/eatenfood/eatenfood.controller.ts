@@ -54,6 +54,16 @@ export class EatenFoodController {
     @Body() updateEatenFoodDto: UpdateEatenFoodDto,
     @GetUser() user: Users,
   ) {
+    if (
+      updateEatenFoodDto.name === undefined ||
+      updateEatenFoodDto.name === null ||
+      updateEatenFoodDto.quantity === undefined ||
+      updateEatenFoodDto.name === null
+    ) {
+      throw new BadRequestException(
+        'veuillez remplir un champ pour mettre à jour votre aliment consommé.',
+      );
+    }
     return this.mealsService.update(id, updateEatenFoodDto, user);
   }
 

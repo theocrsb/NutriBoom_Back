@@ -44,17 +44,26 @@ export class EatenFoodService {
   }
 
   async findOne(id: string, user: Users): Promise<EatenFood> {
-    // const mealFound = await this.eatenFoodRepository.findOneBy({
-    //   id: id,
-    //   users: user,
-    // });
-    const query = this.eatenFoodRepository.createQueryBuilder();
-    query.where({ id: id }).andWhere({ users: user });
-    if (!query) {
+    // console.log(querytest);
+    // console.log('query : ', querytest.getParameters().orm_param_1);
+    // console.log('user : ', user.id);
+    // console.log('id : ', id);
+    // console.log('user.eatenfood[0].id : ', user.eatenfood[0].id);
+    // console.log('valueId', valueId);
+    // console.log('include ------', valueId.id.includes(id));
+    const querytest = await this.eatenFoodRepository.createQueryBuilder();
+    querytest.where({ id: id }).andWhere({ users: user });
+    //.limit(1);
+    // const valueId = {
+    //   id: user.eatenfood.map((x) => x.id),
+    // };
+    const found = await querytest.getOne();
+    console.log(found);
+    if (!found) {
       throw new NotFoundException(`Pas d'aliment consommé avec l'id: ${id}`);
+    } else {
+      return found;
     }
-    return query.getOne();
-    //mealFound;
   }
 
   async update(
