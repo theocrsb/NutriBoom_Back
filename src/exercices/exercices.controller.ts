@@ -55,7 +55,7 @@ export class ExercicesController {
 
   //USER avec getUser
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.exercicesService.remove(+id);
+  remove(@Param('id') id: string, @GetUser() user: Users) {
+    return this.exercicesService.remove(+id, user);
   }
 }
