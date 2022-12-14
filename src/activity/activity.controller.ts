@@ -16,8 +16,8 @@ import { ActivityService } from './activity.service';
 import { CreateActivityDto } from './dto/create-activity.dto';
 import { UpdateActivityDto } from './dto/update-activity.dto';
 
-@UseGuards(JwtAuthGuard)
 @Controller('activity')
+@UseGuards(JwtAuthGuard)
 export class ActivityController {
   constructor(private readonly activityService: ActivityService) {}
   //ADMIN
