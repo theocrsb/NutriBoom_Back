@@ -7,12 +7,15 @@ import {
   Param,
   Delete,
   BadRequestException,
+  UseGuards,
 } from '@nestjs/common';
 import { FoodsService } from './foods.service';
 import { CreateFoodDto } from './dto/create-food.dto';
 import { UpdateFoodDto } from './dto/update-food.dto';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('foods')
+@UseGuards(JwtAuthGuard)
 export class FoodsController {
   constructor(private readonly foodsService: FoodsService) {}
 

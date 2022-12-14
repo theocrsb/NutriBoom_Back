@@ -7,12 +7,15 @@ import {
   Param,
   Delete,
   BadRequestException,
+  UseGuards,
 } from '@nestjs/common';
 import { TypesService } from './types.service';
 import { CreateTypeDto } from './dto/create-type.dto';
 import { UpdateTypeDto } from './dto/update-type.dto';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('types')
+@UseGuards(JwtAuthGuard)
 export class TypesController {
   constructor(private readonly typesService: TypesService) {}
 
