@@ -34,30 +34,14 @@ export class EatenFoodService {
   async findAll(user: Users): Promise<EatenFood[]> {
     console.log('user', user);
     console.log('userlabel', user.role.label);
-    // if (user.role.label === 'admin') {
     const query = this.eatenFoodRepository.createQueryBuilder();
     query.where({ users: user });
     return query.getMany();
-    // return await this.eatenFoodRepository.find();
-    //} else {
-    //throw new UnauthorizedException(`Pas admin`);
-    //}
   }
 
   async findOne(id: string, user: Users): Promise<EatenFood> {
-    // console.log(querytest);
-    // console.log('query : ', querytest.getParameters().orm_param_1);
-    // console.log('user : ', user.id);
-    // console.log('id : ', id);
-    // console.log('user.eatenfood[0].id : ', user.eatenfood[0].id);
-    // console.log('valueId', valueId);
-    // console.log('include ------', valueId.id.includes(id));
     const querytest = await this.eatenFoodRepository.createQueryBuilder();
     querytest.where({ id: id }).andWhere({ users: user });
-    //.limit(1);
-    // const valueId = {
-    //   id: user.eatenfood.map((x) => x.id),
-    // };
     const found = await querytest.getOne();
     console.log(found);
     if (!found) {
@@ -81,7 +65,6 @@ export class EatenFoodService {
         `Pas d'aliment consommé modifiable avec l'id: ${id}`,
       );
     }
-    // return query.getOne();
     const updateMeal = await this.findOne(id, user);
     if (updateMeal.name !== undefined || null) {
       updateMeal.name = updateEatenFoodDto.name;
@@ -101,7 +84,6 @@ export class EatenFoodService {
     const querytest = await this.eatenFoodRepository.createQueryBuilder();
     querytest.where({ id: id }).andWhere({ users: user });
     const found = await querytest.getOne();
-    //
     if (!found) {
       throw new NotFoundException(`Pas d'aliment consommé avec l'id: ${id}`);
     } else {
