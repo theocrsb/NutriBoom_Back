@@ -13,8 +13,8 @@ import { JwtStrategy } from './jwt-strategy';
 dotenv.config({ path: '.env' });
 @Module({
   imports: [
-    UsersModule,
-    PassportModule,
+    TypeOrmModule.forFeature([Users]),
+    PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
       secret: process.env.SECRET_KEY,
       signOptions: { expiresIn: '4h' },
@@ -26,6 +26,6 @@ dotenv.config({ path: '.env' });
     JwtStrategy,
     //, LocalStrategy
   ],
-  exports: [AuthService],
+  exports: [AuthService, PassportModule, JwtStrategy],
 })
 export class AuthModule {}

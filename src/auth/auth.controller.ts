@@ -7,12 +7,11 @@ import {
   Body,
   BadRequestException,
 } from '@nestjs/common';
-// import { JwtAuthGuard } from './auth/jwt-auth.guard';
+// import { AuthGuard } from './auth/jwt-auth.guard';
 // import { LocalAuthGuard } from './local-auth.guard';
 import { AuthService } from './auth.service';
 import { Users } from 'src/users/entities/user.entity';
 import { UserLoginDto } from './dto/userLoginDto';
-import { JwtAuthGuard } from './jwt-auth.guard';
 
 @Controller()
 export class AuthController {

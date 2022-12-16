@@ -12,7 +12,9 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { AdminGuard } from 'src/auth/admin.guard';
+import { AuthGuard } from '@nestjs/passport';
+import { GetUser } from 'src/auth/get-user.decorator';
 
 @Controller('users')
 export class UsersController {
@@ -41,28 +43,29 @@ export class UsersController {
   }
   //ADMIN
   @Get()
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(AuthGuard(), AdminGuard)
   findAll() {
     return this.usersService.findAll();
   }
 
   //USER avec GetUser
   @Get(':id')
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(AdminGuard)
+  @UseGuards(AuthGuard())
   findOne(@Param('id') id: string) {
     return this.usersService.findOne(id);
   }
 
   //USER avec GetUser
   @Patch(':id')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(AuthGuard())
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(id, updateUserDto);
   }
 
   //USER avec GetUser
   @Delete(':id')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(AuthGuard())
   remove(@Param('id') id: string) {
     return this.usersService.remove(id);
   }

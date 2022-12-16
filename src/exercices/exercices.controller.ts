@@ -14,9 +14,9 @@ import { CreateExerciceDto } from './dto/create-exercice.dto';
 import { UpdateExerciceDto } from './dto/update-exercice.dto';
 import { GetUser } from 'src/auth/get-user.decorator';
 import { Users } from 'src/users/entities/user.entity';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { AuthGuard } from '@nestjs/passport';
 @Controller('exercices')
-@UseGuards(JwtAuthGuard)
+@UseGuards(AuthGuard())
 export class ExercicesController {
   constructor(private readonly exercicesService: ExercicesService) {}
 

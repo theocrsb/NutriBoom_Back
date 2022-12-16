@@ -11,17 +11,20 @@ import {
   BadRequestException,
   UseGuards,
 } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { AuthGuard } from '@nestjs/passport';
+import { AdminGuard } from 'src/auth/admin.guard';
+
 import { ActivityService } from './activity.service';
 import { CreateActivityDto } from './dto/create-activity.dto';
 import { UpdateActivityDto } from './dto/update-activity.dto';
 
 @Controller('activity')
-@UseGuards(JwtAuthGuard)
+@UseGuards(AuthGuard())
 export class ActivityController {
   constructor(private readonly activityService: ActivityService) {}
   //ADMIN
   @Post()
+  @UseGuards(AdminGuard)
   create(@Body() createActivityDto: CreateActivityDto) {
     if (createActivityDto.name && createActivityDto.conso_cal_1h) {
       return this.activityService.create(createActivityDto);
@@ -43,6 +46,7 @@ export class ActivityController {
   }
   //ADMIN
   @Patch(':id')
+  @UseGuards(AdminGuard)
   async update(
     @Param('id') id: string,
     @Body() updateActivityDto: UpdateActivityDto,
@@ -51,6 +55,7 @@ export class ActivityController {
   }
   //ADMIN
   @Delete(':id')
+  @UseGuards(AdminGuard)
   async remove(@Param('id') id: string) {
     return await this.activityService.remove(id);
   }

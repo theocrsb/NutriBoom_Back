@@ -10,14 +10,13 @@ import * as bcrypt from 'bcrypt';
 @Injectable()
 export class AuthService {
   constructor(
-    private usersService: UsersService,
     private jwtService: JwtService,
     @InjectRepository(Users)
     private userRepo: Repository<Users>,
   ) {}
 
   async validateUser(email: string, password: string): Promise<any> {
-    const user = await this.usersService.findOne(email);
+    const user = await this.userRepo.findOneBy({ email });
     console.log('validate user');
     if (user && user.password === password) {
       const { password, ...result } = user;

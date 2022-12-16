@@ -9,14 +9,14 @@ import {
   UseGuards,
   BadRequestException,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from 'src/auth/get-user.decorator';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Users } from 'src/users/entities/user.entity';
 import { CreateEatenFoodDto } from './dto/create-eatenfood.dto';
 import { UpdateEatenFoodDto } from './dto/update-eatenfood.dto';
 import { EatenFoodService } from './eatenfood.service';
 @Controller('meals')
-@UseGuards(JwtAuthGuard)
+@UseGuards(AuthGuard())
 export class EatenFoodController {
   constructor(private readonly mealsService: EatenFoodService) {}
 

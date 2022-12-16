@@ -12,15 +12,17 @@ import {
 import { FoodsService } from './foods.service';
 import { CreateFoodDto } from './dto/create-food.dto';
 import { UpdateFoodDto } from './dto/update-food.dto';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { AuthGuard } from '@nestjs/passport';
+import { AdminGuard } from 'src/auth/admin.guard';
 
 @Controller('foods')
-@UseGuards(JwtAuthGuard)
+@UseGuards(AuthGuard())
 export class FoodsController {
   constructor(private readonly foodsService: FoodsService) {}
 
   //ADMIN
   @Post()
+  @UseGuards(AdminGuard)
   create(@Body() createFoodDto: CreateFoodDto) {
     if (
       createFoodDto.name &&
@@ -51,12 +53,14 @@ export class FoodsController {
 
   //ADMIN
   @Patch(':id')
+  @UseGuards(AdminGuard)
   update(@Param('id') id: string, @Body() updateFoodDto: UpdateFoodDto) {
     return this.foodsService.update(id, updateFoodDto);
   }
 
   //ADMIN
   @Delete(':id')
+  @UseGuards(AdminGuard)
   remove(@Param('id') id: string) {
     return this.foodsService.remove(id);
   }
