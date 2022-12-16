@@ -1,3 +1,4 @@
+import { IsEmail, IsNotEmpty } from 'class-validator';
 import { Activity } from 'src/activity/entities/activity.entity';
 import { Exercices } from 'src/exercices/entities/exercice.entity';
 import { Role } from 'src/role/entities/role.entity';
