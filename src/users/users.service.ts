@@ -78,7 +78,7 @@ export class UsersService {
     if (userUpdate.firstname !== undefined) {
       userUpdate.firstname = updateUserDto.firstname;
     }
-    if (userUpdate.password !== undefined) {
+    if (updateUserDto.password !== undefined) {
       console.log('updateUserDto.password: ', updateUserDto.password);
       const saltOrRounds = 10;
       const password = updateUserDto.password;
