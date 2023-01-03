@@ -22,14 +22,15 @@ export class FoodsController {
 
   //ADMIN
   @Post()
-  @UseGuards(AdminGuard)
+  @UseGuards()
   create(@Body() createFoodDto: CreateFoodDto) {
     if (
-      createFoodDto.name &&
-      createFoodDto.nombre_calories &&
-      createFoodDto.lipides &&
-      createFoodDto.glucides &&
-      createFoodDto.proteines
+      createFoodDto.name !== undefined &&
+      createFoodDto.nombre_calories !== undefined &&
+      createFoodDto.lipides !== undefined &&
+      createFoodDto.glucides !== undefined &&
+      createFoodDto.proteines !== undefined &&
+      createFoodDto.validate !== undefined
     ) {
       return this.foodsService.create(createFoodDto);
     } else {

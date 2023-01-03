@@ -4,4 +4,5 @@ export class CreateFoodDto {
   lipides: number;
   glucides: number;
   proteines: number;
+  validate: boolean;
 }

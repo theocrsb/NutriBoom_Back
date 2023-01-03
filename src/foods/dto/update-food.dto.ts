@@ -4,4 +4,5 @@ export class UpdateFoodDto {
   lipides: number;
   glucides: number;
   proteines: number;
+  validate: boolean;
 }
