@@ -58,6 +58,7 @@ export class UsersService {
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<Users> {
     const userUpdate = await this.findOne(id);
+
     if (userUpdate.lastname !== undefined) {
       userUpdate.lastname = updateUserDto.lastname;
     }
@@ -71,24 +72,40 @@ export class UsersService {
       userUpdate.gender = updateUserDto.gender;
     }
     if (userUpdate.height !== undefined) {
+      console.log('userUpdate.height: ', userUpdate.height);
       userUpdate.height = updateUserDto.height;
     }
     if (userUpdate.firstname !== undefined) {
       userUpdate.firstname = updateUserDto.firstname;
     }
-    if (userUpdate.password !== undefined) {
-      userUpdate.password = updateUserDto.password;
+    if (updateUserDto.password !== undefined) {
+      console.log('updateUserDto.password: ', updateUserDto.password);
+      const saltOrRounds = 10;
+      const password = updateUserDto.password;
+      console.log('password: ', password);
+
+      const hash = await bcrypt.hash(password, saltOrRounds);
+      console.log('hash: ', hash);
+      userUpdate.password = hash;
+      console.log('user create password: ', userUpdate.password);
+      //updateUserDto.password = userUpdate.password;
+      // userUpdate.password = updateUserDto.password;
+      console.log('user dto password: ', updateUserDto.password);
     }
     if (userUpdate.weight !== undefined) {
       userUpdate.weight = updateUserDto.weight;
     }
+
     // if (userUpdate.exercices !== undefined) {
     //   userUpdate.exercices = userUpdate.exercices;
     // }
     // if (userUpdate.Activity !== undefined) {
     //   userUpdate.Activity = updateUserDto.Activity;
     // }
-
+    console.log(
+      'userUpdate--------------------------------------------------',
+      userUpdate,
+    );
     return await this.userRepository.save(userUpdate);
   }
 

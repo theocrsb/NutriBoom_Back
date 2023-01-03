@@ -32,6 +32,7 @@ export class RoleService {
     if (updateRole.label !== undefined) {
       updateRole.label = updateRoleDto.label;
     }
+
     return await this.roleRepository.save(updateRole);
   }
 
