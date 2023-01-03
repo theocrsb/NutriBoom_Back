@@ -7,6 +7,7 @@ import { Users } from './entities/user.entity';
 import { Role } from 'src/role/entities/role.entity';
 import { RoleService } from 'src/role/role.service';
 import * as bcrypt from 'bcrypt';
+import { UpdateRoleDto } from './dto/update-role.dto';
 
 @Injectable()
 export class UsersService {
@@ -102,13 +103,24 @@ export class UsersService {
     // if (userUpdate.Activity !== undefined) {
     //   userUpdate.Activity = updateUserDto.Activity;
     // }
-    console.log(
-      'userUpdate--------------------------------------------------',
-      userUpdate,
-    );
+    // console.log(
+    //   'userUpdate--------------------------------------------------',
+    //   userUpdate,
+    // );
     return await this.userRepository.save(userUpdate);
   }
 
+  // update role by admin
+  async updateRole(id: string, updateRoleDto: UpdateRoleDto): Promise<Users> {
+    const userUpdate = await this.findOne(id);
+    if (updateRoleDto.role.id !== undefined) {
+      userUpdate.role.id = updateRoleDto.role.id;
+      // userUpdate.role.label = updateRoleDto.role.label;
+    }
+    return await this.userRepository.save(userUpdate);
+  }
+
+  // remove
   async remove(id: string): Promise<string> {
     const result = await this.userRepository.delete({ id });
     if (result.affected === 0) {

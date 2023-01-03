@@ -15,6 +15,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { AdminGuard } from 'src/auth/admin.guard';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from 'src/auth/get-user.decorator';
+import { UpdateRoleDto } from './dto/update-role.dto';
 
 @Controller('users')
 export class UsersController {
@@ -61,6 +62,14 @@ export class UsersController {
   @UseGuards(AuthGuard())
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(id, updateUserDto);
+  }
+
+  // update role d'un user
+  @Patch(':id/admin')
+  @UseGuards(AdminGuard)
+  @UseGuards(AuthGuard())
+  updateRole(@Param('id') id: string, @Body() updateRoleDto: UpdateRoleDto) {
+    return this.usersService.updateRole(id, updateRoleDto);
   }
 
   //USER avec GetUser
