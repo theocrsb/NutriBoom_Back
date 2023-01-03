@@ -50,7 +50,7 @@ export class UsersController {
 
   //USER avec GetUser
   @Get(':id')
-  @UseGuards(AdminGuard)
+  // @UseGuards(AdminGuard)
   @UseGuards(AuthGuard())
   findOne(@Param('id') id: string) {
     return this.usersService.findOne(id);
