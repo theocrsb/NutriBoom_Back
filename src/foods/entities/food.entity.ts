@@ -45,6 +45,13 @@ export class Food {
   })
   proteines: number;
 
+  // ajout columun validate pour un aliment ajouté par user
+  @Column({
+    nullable: false,
+    type: 'boolean',
+  })
+  validate: boolean;
+
   @OneToMany(() => EatenFood, (eatenfood) => eatenfood.food, { eager: false })
   eatenfood: EatenFood[];
 }
