@@ -21,6 +21,8 @@ import { EatenFood } from './eatenfood/entities/eatenfood.entity';
 import { AuthModule } from './auth/auth.module';
 import { PassportModule } from '@nestjs/passport';
 import { AuthController } from './auth/auth.controller';
+import { MailtoModule } from './mailto/mailto.module';
+import { MailTo } from './mailto/entities/mailto.entity';
 
 dotenv.config({ path: '.env' });
 
@@ -33,7 +35,16 @@ dotenv.config({ path: '.env' });
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [Users, Exercices, Activity, EatenFood, Type, Food, Role],
+      entities: [
+        Users,
+        Exercices,
+        Activity,
+        EatenFood,
+        Type,
+        Food,
+        Role,
+        MailTo,
+      ],
       synchronize: process.env.MODE === 'DEV' ? true : false,
       logging: false,
     }),
@@ -46,6 +57,7 @@ dotenv.config({ path: '.env' });
     RoleModule,
     AuthModule,
     PassportModule,
+    MailtoModule,
   ],
   controllers: [AuthController],
   providers: [AppService],
