@@ -26,39 +26,43 @@ export class UsersService {
   // Ajout constructor pour interagir avec la table role
 
   async create(createUserDto: CreateUserDto): Promise<Users> {
-    const roleUser = await this.roleRepository.findOneBy({ label: 'user' });
-    // const roleUserString = roleUser.label;
-    console.log('roleUser ', roleUser);
+    try {
+      const roleUser = await this.roleRepository.findOneBy({ label: 'user' });
+      // const roleUserString = roleUser.label;
+      console.log('roleUser ', roleUser);
+      //1 faire un get all users
+      //2 récupérer tous les users.emaildans un tab
+      //3 dans une boucle comparer => si result =
+      const userCreate = await this.userRepository.save(createUserDto);
+      console.log(userCreate);
+      userCreate.role = roleUser;
+      if (userCreate.role.label !== 'user') {
+        throw new NotFoundException(`Pas un user !!!`);
+      }
+      console.log('apres MAJ .role', userCreate);
+      const saltOrRounds = 10;
+      const password = userCreate.password;
+      console.log('password: ', password);
+      const hash = await bcrypt.hash(password, saltOrRounds);
+      console.log('hash: ', hash);
+      userCreate.password = hash;
+      console.log('user create password: ', userCreate.password);
+      // 1 - recuperer objet role . user classique (via repository)
+      // 2- creer une instance de user a l'aide du repo user
+      // 3- update l'instance de user pour modifier sa proprieter role avec ce qui a ete recuperer a l'etape 1
+      // 4- save
 
-    const userCreate = await this.userRepository.save(createUserDto);
-    console.log(userCreate);
-    userCreate.role = roleUser;
-    if (userCreate.role.label !== 'user') {
-      throw new NotFoundException(`Pas un user !!!`);
+      // try {
+      return await this.userRepository.save(userCreate);
+    } catch (error) {
+      console.log('error----', error);
+
+      if (error.code === '23505') {
+        throw new ConflictException('email already exists');
+      } else {
+        throw new InternalServerErrorException();
+      }
     }
-    console.log('apres MAJ .role', userCreate);
-    const saltOrRounds = 10;
-    const password = userCreate.password;
-    console.log('password: ', password);
-    const hash = await bcrypt.hash(password, saltOrRounds);
-    console.log('hash: ', hash);
-    userCreate.password = hash;
-    console.log('user create password: ', userCreate.password);
-    // 1 - recuperer objet role . user classique (via repository)
-    // 2- creer une instance de user a l'aide du repo user
-    // 3- update l'instance de user pour modifier sa proprieter role avec ce qui a ete recuperer a l'etape 1
-    // 4- save
-
-    // try {
-    return await this.userRepository.save(userCreate);
-    // } catch (error) {
-    //   console.log('error----', error);
-    //   if (error.code === '23505') {
-    //     throw new ConflictException('username already exists');
-    //   } else {
-    //     throw new InternalServerErrorException();
-    //   }
-    // }
   }
 
   async findAll(): Promise<Users[]> {
