@@ -1,4 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -24,6 +29,7 @@ export class UsersService {
     const roleUser = await this.roleRepository.findOneBy({ label: 'user' });
     // const roleUserString = roleUser.label;
     console.log('roleUser ', roleUser);
+
     const userCreate = await this.userRepository.save(createUserDto);
     console.log(userCreate);
     userCreate.role = roleUser;
@@ -42,7 +48,17 @@ export class UsersService {
     // 2- creer une instance de user a l'aide du repo user
     // 3- update l'instance de user pour modifier sa proprieter role avec ce qui a ete recuperer a l'etape 1
     // 4- save
+
+    // try {
     return await this.userRepository.save(userCreate);
+    // } catch (error) {
+    //   console.log('error----', error);
+    //   if (error.code === '23505') {
+    //     throw new ConflictException('username already exists');
+    //   } else {
+    //     throw new InternalServerErrorException();
+    //   }
+    // }
   }
 
   async findAll(): Promise<Users[]> {
@@ -111,11 +127,55 @@ export class UsersService {
   }
 
   // update role by admin
-  async updateRole(id: string, updateRoleDto: UpdateRoleDto): Promise<Users> {
+  async updateRole(
+    id: string,
+    updateRoleDto: UpdateRoleDto,
+    updateUserDto: UpdateUserDto,
+  ): Promise<Users> {
     const userUpdate = await this.findOne(id);
     if (updateRoleDto.role.id !== undefined) {
       userUpdate.role.id = updateRoleDto.role.id;
       // userUpdate.role.label = updateRoleDto.role.label;
+    }
+    //
+    if (userUpdate.lastname !== undefined) {
+      userUpdate.lastname = updateUserDto.lastname;
+    }
+    if (userUpdate.age !== undefined) {
+      userUpdate.age = updateUserDto.age;
+    }
+    if (userUpdate.email !== undefined) {
+      userUpdate.email = updateUserDto.email;
+    }
+    if (userUpdate.gender !== undefined) {
+      userUpdate.gender = updateUserDto.gender;
+    }
+    if (userUpdate.height !== undefined) {
+      console.log('userUpdate.height: ', userUpdate.height);
+      userUpdate.height = updateUserDto.height;
+    }
+    if (userUpdate.firstname !== undefined) {
+      userUpdate.firstname = updateUserDto.firstname;
+    }
+    if (updateUserDto.password !== undefined) {
+      console.log('updateUserDto.password: ', updateUserDto.password);
+      const saltOrRounds = 10;
+      const password = updateUserDto.password;
+      console.log('password: ', password);
+
+      const hash = await bcrypt.hash(password, saltOrRounds);
+      console.log('hash: ', hash);
+      userUpdate.password = hash;
+      console.log('user create password: ', userUpdate.password);
+      //updateUserDto.password = userUpdate.password;
+      // userUpdate.password = updateUserDto.password;
+      console.log('user dto password: ', updateUserDto.password);
+    }
+    if (userUpdate.weight !== undefined) {
+      userUpdate.weight = updateUserDto.weight;
+    }
+    if (userUpdate.ratio !== undefined) {
+      userUpdate.ratio = updateUserDto.ratio;
     }
     return await this.userRepository.save(userUpdate);
   }
