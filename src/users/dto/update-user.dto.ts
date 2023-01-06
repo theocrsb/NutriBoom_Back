@@ -3,6 +3,7 @@ import {
   IsEmail,
   IsInt,
   IsNotEmpty,
+  IsNumber,
   IsOptional,
   IsString,
   Matches,
@@ -59,14 +60,14 @@ export class UpdateUserDto {
   //
 
   @IsOptional()
-  @IsInt()
+  @IsNumber()
   @Min(30)
   @Max(300)
   weight: number;
   //
 
   @IsOptional()
-  @IsInt()
+  @IsNumber()
   @Min(10)
   @Max(500)
   height: number;
@@ -75,7 +76,7 @@ export class UpdateUserDto {
   @IsOptional()
   @Min(0.1)
   @Max(10)
-  @IsInt()
+  @IsNumber()
   ratio: number;
   //
 

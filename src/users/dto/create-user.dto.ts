@@ -57,7 +57,7 @@ export class CreateUserDto {
   gender: string;
   //
 
-  @IsInt()
+  @IsNumber()
   @Min(30)
   @Max(300)
   weight: number;
