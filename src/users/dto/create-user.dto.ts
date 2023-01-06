@@ -5,7 +5,9 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
+  Matches,
   Max,
+  MaxLength,
   Min,
   MinLength,
   NotEquals,
@@ -15,15 +17,24 @@ import { Exercices } from 'src/exercices/entities/exercice.entity';
 import { Role } from 'src/role/entities/role.entity';
 
 export class CreateUserDto {
-  @Transform(({ value }: TransformFnParams) => value?.trim())
-  // transform pour retirer les espaces
-  @MinLength(2, {
-    message: ' Please enter at least 2 characters ',
+  //
+  //AJOUT DES TRIM DANS LE FRONT POUR GESTION DES ESPACES
+  //
+  @IsString()
+  @IsNotEmpty()
+  @Matches(/^[A-Za-zÀ-ÿ]+[A-Za-zÀ-ÿ ]*$/, {
+    message: 'Please enter letters without spaces at the beginning',
+  })
+  @MinLength(1, {
+    message: ' Please enter at least 1 characters ',
   })
   lastname: string;
   //
-
-  @Transform(({ value }: TransformFnParams) => value?.trim())
+  @IsString()
+  @IsNotEmpty()
+  @Matches(/^[A-Za-zÀ-ÿ]+[A-Za-zÀ-ÿ ]*$/, {
+    message: 'Please enter letters without spaces at the beginning',
+  })
   @MinLength(2, {
     message: ' Please enter at least 2 characters ',
   })
@@ -31,11 +42,14 @@ export class CreateUserDto {
   //
 
   @IsInt()
-  // @Min(0)
-  // @Max(150)
+  @Min(1)
+  @Max(150)
   age: number;
   //
-
+  @IsString()
+  @MaxLength(5, {
+    message: ' Please enter a maximum of 5 characters ',
+  })
   @MinLength(5, {
     message: ' Please enter at least 5 characters ',
   })
@@ -43,27 +57,35 @@ export class CreateUserDto {
   //
 
   @IsInt()
+  @Min(30)
+  @Max(300)
   weight: number;
   //
 
   @IsInt()
+  @Min(10)
+  @Max(500)
   height: number;
   //
+  @Min(0.1)
+  @Max(10)
   @IsInt()
   ratio: number;
   //
 
   @IsEmail()
   @IsString()
-  @Transform(({ value }: TransformFnParams) => value?.trim())
   email: string;
   //
 
   @IsString()
-  @Transform(({ value }: TransformFnParams) => value?.trim())
   @MinLength(4, {
     message: 'Please enter at least 4 characters',
   })
-  @Transform(({ value }: TransformFnParams) => value?.trim())
+  @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
+    message:
+      'password must have 1 lower case letter, 1 upper case letter and 1 number or special character',
+  })
+  // @Transform(({ value }: TransformFnParams) => value?.trim())
   password: string;
 }
