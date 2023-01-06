@@ -11,14 +11,14 @@ export class UpdateUserDto {
   gender?: string;
   weight?: number;
   height?: number;
-  @IsEmail()
-  @IsString()
+  // @IsEmail()
+  // @IsString()
   @Transform(({ value }: TransformFnParams) => value?.trim())
   email?: string;
-  @IsString()
-  @MinLength(4, {
-    message: 'Veuillez saisir au moins 4 caractère',
-  })
+  // @IsString()
+  // @MinLength(4, {
+  //   message: 'Veuillez saisir au moins 4 caractère',
+  // })
   @Transform(({ value }: TransformFnParams) => value?.trim())
   password?: string;
   Activity?: Activity[];
