@@ -3,6 +3,7 @@ import {
   IsEmail,
   IsInt,
   IsNotEmpty,
+  IsNumber,
   IsOptional,
   IsString,
   Matches,
@@ -62,14 +63,14 @@ export class CreateUserDto {
   weight: number;
   //
 
-  @IsInt()
-  @Min(10)
+  @IsNumber()
+  @Min(0.5)
   @Max(500)
   height: number;
   //
   @Min(0.1)
   @Max(10)
-  @IsInt()
+  @IsNumber()
   ratio: number;
   //
 
