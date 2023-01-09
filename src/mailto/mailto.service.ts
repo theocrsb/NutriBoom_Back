@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateMailtoDto } from './dto/create-mailto.dto';
@@ -27,7 +27,11 @@ export class MailtoService {
   //   return `This action updates a #${id} mailto`;
   // }
 
-  remove(id: number) {
-    return `This action removes a #${id} mailto`;
+  async remove(id: number) {
+    const result = await this.mailToRepository.delete({ id });
+    if (result.affected === 0) {
+      throw new NotFoundException(`Pas de mail avec l'id: ${id}`);
+    }
+    return `le mail avec l'id: ${id} a été supprimé!`;
   }
 }
