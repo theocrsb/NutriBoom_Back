@@ -81,6 +81,7 @@ export class Users {
   })
   password: string;
 
+  // Ajout onDelete CASCADE pour les pb de contraintes
   @OneToMany(() => Exercices, (exercices) => exercices.users, { eager: true })
   exercices!: Exercices[];
 
