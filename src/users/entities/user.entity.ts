@@ -82,12 +82,18 @@ export class Users {
   password: string;
 
   // Ajout onDelete CASCADE pour les pb de contraintes
-  @OneToMany(() => Exercices, (exercices) => exercices.users, { eager: true })
+  @OneToMany(() => Exercices, (exercices) => exercices.users, {
+    eager: true,
+    onDelete: 'CASCADE',
+  })
   exercices!: Exercices[];
 
   @ManyToOne(() => Role, (role) => role.users, { eager: true })
   role: Role;
 
-  @OneToMany(() => EatenFood, (eatenfood) => eatenfood.users, { eager: true })
+  @OneToMany(() => EatenFood, (eatenfood) => eatenfood.users, {
+    eager: true,
+    onDelete: 'CASCADE',
+  })
   eatenfood: EatenFood[];
 }
