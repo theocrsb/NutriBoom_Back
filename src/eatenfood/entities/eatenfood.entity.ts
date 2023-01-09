@@ -34,7 +34,10 @@ export class EatenFood {
   })
   quantity: number;
 
-  @ManyToOne(() => Users, (user) => user.eatenfood, { eager: false })
+  @ManyToOne(() => Users, (user) => user.eatenfood, {
+    eager: false,
+    onDelete: 'CASCADE',
+  })
   users: Users;
 
   @ManyToOne(() => Type, (type) => type.eatenfood, { eager: true })

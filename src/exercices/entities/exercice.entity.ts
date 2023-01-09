@@ -27,6 +27,7 @@ export class Exercices {
 
   @ManyToOne(() => Users, (users) => users.exercices, {
     eager: false,
+    onDelete: 'CASCADE',
   })
   users!: Users;
 }
