@@ -24,7 +24,7 @@ export class ActivityController {
   constructor(private readonly activityService: ActivityService) {}
   //ADMIN
   @Post()
-  @UseGuards(AdminGuard)
+  @UseGuards()
   create(@Body() createActivityDto: CreateActivityDto) {
     if (createActivityDto.name && createActivityDto.conso_cal_1h) {
       return this.activityService.create(createActivityDto);
