@@ -1,3 +1,4 @@
+import  jwt_decoded  from "jwt-decode";
 import {
   ConflictException,
   Injectable,
@@ -13,6 +14,7 @@ import { Role } from 'src/role/entities/role.entity';
 import { RoleService } from 'src/role/role.service';
 import * as bcrypt from 'bcrypt';
 import { UpdateRoleDto } from './dto/update-role.dto';
+import jwt from 'jsonwebtoken';
 
 @Injectable()
 export class UsersService {
@@ -74,6 +76,21 @@ export class UsersService {
     if (!userFound) {
       throw new NotFoundException(`Pas d'utilisateurs avec l'id : ${id}`);
     }
+    return userFound;
+  }
+
+  async findOneByEmail(email: string): Promise<Users> {
+    const userFound = await this.userRepository.findOneBy({ email: email });
+    if (!userFound) {
+      throw new NotFoundException(`Pas d'utilisateurs cet email : ${email}`);
+    }
+    const token = jwt.sign(
+      { email: userFound.email, id: userFound.id },
+      process.env.SECRET_KEY_RESET,
+      { expiresIn: '1h' },
+    );
+    console.log(token);
+    console.log(jwt_decoded(token));
     return userFound;
   }
 

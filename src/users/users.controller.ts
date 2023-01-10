@@ -16,6 +16,7 @@ import { AdminGuard } from 'src/auth/admin.guard';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from 'src/auth/get-user.decorator';
 import { UpdateRoleDto } from './dto/update-role.dto';
+import { VerifUserDto } from './dto/verif-user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -42,6 +43,14 @@ export class UsersController {
       );
     }
   }
+@Post ()
+  verif(@Body() verifUserDto: VerifUserDto, ){
+    if (verifUserDto.email){
+      return this.usersService.findOneByEmail(verifUserDto.email)
+    }
+  }
+
+
   //ADMIN
   @Get()
   @UseGuards(AuthGuard(), AdminGuard)
@@ -82,4 +91,6 @@ export class UsersController {
   remove(@Param('id') id: string) {
     return this.usersService.remove(id);
   }
+
+  
 }
