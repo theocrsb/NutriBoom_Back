@@ -43,7 +43,7 @@ export class UsersController {
       );
     }
   }
-@Post ()
+@Post ('/reset/password')
   verif(@Body() verifUserDto: VerifUserDto, ){
     if (verifUserDto.email){
       return this.usersService.findOneByEmail(verifUserDto.email)
