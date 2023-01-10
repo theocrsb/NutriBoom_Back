@@ -44,6 +44,9 @@ export class FoodsService {
     if (updateFood.proteines !== undefined) {
       updateFood.proteines = updateFoodDto.proteines;
     }
+    if (updateFood.validate !== undefined) {
+      updateFood.validate = updateFoodDto.validate;
+    }
 
     return await this.foodRepository.save(updateFood);
   }

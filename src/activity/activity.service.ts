@@ -42,6 +42,9 @@ export class ActivityService {
     if (updateActivity.conso_cal_1h !== undefined) {
       updateActivity.conso_cal_1h = updateActivityDto.conso_cal_1h;
     }
+    if (updateActivity.validate !== undefined) {
+      updateActivity.validate = updateActivityDto.validate;
+    }
     return await this.activityRepository.save(updateActivity);
   }
 
