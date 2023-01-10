@@ -1,3 +1,5 @@
+import { JwtService } from '@nestjs/jwt';
+import { NewPasswordDto } from './dto/new-password-user.dto';
 import {
   Controller,
   Get,
@@ -17,10 +19,13 @@ import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from 'src/auth/get-user.decorator';
 import { UpdateRoleDto } from './dto/update-role.dto';
 import { VerifUserDto } from './dto/verif-user.dto';
+import * as dotenv from  "dotenv"
+dotenv.config({ path: '.env' });
+
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService, private jwtService :JwtService) {}
 
   //all persons
   @Post()
@@ -83,6 +88,14 @@ export class UsersController {
     @Body() updateUserDto: UpdateUserDto,
   ) {
     return this.usersService.updateRole(id, updateRoleDto, updateUserDto);
+  }
+
+  @Patch('/reset/password')
+  updateForgottedPassword(
+    @Body() newPasswordDto: NewPasswordDto
+  ) {
+    this.jwtService.verify(newPasswordDto.token)
+    return this.usersService.updateForgottedPassword(newPasswordDto);
   }
 
   //USER avec GetUser

@@ -1,3 +1,4 @@
+import { NewPasswordDto } from './dto/new-password-user.dto';
 import { HttpModule } from '@nestjs/axios';
 import  jwt_decoded  from "jwt-decode";
 import {
@@ -167,6 +168,11 @@ return token
     //   userUpdate,
     // );
     return await this.userRepository.save(userUpdate);
+  }
+
+  async updateForgottedPassword(newPasswordDto : NewPasswordDto){
+    
+return "mot de passe reinitialisé"
   }
 
   // update role by admin
