@@ -1,3 +1,4 @@
+import { HttpModule } from '@nestjs/axios';
 import  jwt_decoded  from "jwt-decode";
 import {
   ConflictException,
@@ -15,7 +16,13 @@ import { RoleService } from 'src/role/role.service';
 import * as bcrypt from 'bcrypt';
 import { UpdateRoleDto } from './dto/update-role.dto';
 import jwt from 'jsonwebtoken';
+import { JwtService } from '@nestjs/jwt';
+import emailjs from "emailjs-com"
+
 import * as dotenv from "dotenv";
+import { HttpService } from '@nestjs/axios/dist';
+const XMLHttpRequest = require('xhr2');
+const xhr = new XMLHttpRequest();
 
 dotenv.config({ path: '.env' });
 
@@ -27,7 +34,8 @@ export class UsersService {
     @InjectRepository(Users)
     private userRepository: Repository<Users>,
     @InjectRepository(Role)
-    private roleRepository: Repository<Role>,
+    private roleRepository: Repository<Role>,private jwtService : JwtService,
+    private httpService : HttpService
   ) {}
   // Ajout constructor pour interagir avec la table role
 
@@ -83,27 +91,30 @@ export class UsersService {
     return userFound;
   }
 
-  async findOneByEmail(email: string): Promise<Users> {
+  async findOneByEmail(email: string) {
     const userFound = await this.userRepository.findOneBy({ email: email });
-    
-    console.log(process.env.SECRET_KEY_RESET
-)
+    let token;
+   
+//     console.log(process.env.SECRET_KEY_RESET
+// )
     if (!userFound) {
       throw new NotFoundException(`Pas d'utilisateurs cet email : ${email}`);  
     }
     try {
-       const token = jwt.sign(
+       token = this.jwtService.sign(
       { email: userFound.email, id: userFound.id},
-       process.env.SECRET_KEY_RESET,
-      { expiresIn: '1h' },
+
     );
-
-
+ 
     } catch (error) {
-      console.log(error)
+      console.log("error du catch",error)
     }
-    return userFound;
-  }
+    // Mail avec token en query param
+return token
+};
+
+
+  
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<Users> {
     const userUpdate = await this.findOne(id);
