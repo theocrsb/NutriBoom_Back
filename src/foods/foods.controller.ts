@@ -45,6 +45,12 @@ export class FoodsController {
   findAll() {
     return this.foodsService.findAll();
   }
+  // FindAll mais pour l'administrateur : sécurise l'accès à la page Admin
+  @Get('/admin')
+  @UseGuards(AdminGuard)
+  findAllForAdmin() {
+    return this.foodsService.findAll();
+  }
 
   //USER sans getUser
   @Get(':id')
