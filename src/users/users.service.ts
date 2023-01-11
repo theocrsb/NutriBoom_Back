@@ -133,8 +133,8 @@ const url = `http://localhost:3000/resetpass?token=${token}`;
       text: `Salut ${userFound.firstname},
        clique sur ce lien pour réinitialiser ton mot de passe  ${url} `,
     };
-    return await transporter.sendMail(mailOptions);
-    return token;
+    const mailSend= await transporter.sendMail(mailOptions);
+    return {mailSend,token} 
   }
 
  
