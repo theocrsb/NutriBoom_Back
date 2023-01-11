@@ -20,7 +20,6 @@ import jwt from 'jsonwebtoken';
 import { JwtService } from '@nestjs/jwt';
 import { Transporter } from 'nodemailer';
 import { createTransport } from 'nodemailer';
-import { MailService } from 'src/mail/mail.service';
 const nodemailer = require("nodemailer")
 import * as dotenv from "dotenv";
 

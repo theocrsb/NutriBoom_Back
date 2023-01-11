@@ -27,8 +27,6 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { join } from 'path';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
-import { MailModule } from './mail/mail.module';
-import { MailService } from './mail/mail.service';
 
 
 
@@ -70,10 +68,10 @@ dotenv.config({ path: '.env' });
     AuthModule,
     PassportModule,
     MailtoModule,
-    MailModule,
+    
     
   ],
   controllers: [AuthController],
-  providers: [AppService, MailService],
+  providers: [AppService],
 })
 export class AppModule {}
