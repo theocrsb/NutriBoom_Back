@@ -1,6 +1,6 @@
 import { NewPasswordDto } from './dto/new-password-user.dto';
 import { HttpModule } from '@nestjs/axios';
-import  jwt_decoded  from "jwt-decode";
+import jwt_decoded from 'jwt-decode';
 import {
   ConflictException,
   Injectable,
@@ -18,14 +18,15 @@ import * as bcrypt from 'bcrypt';
 import { UpdateRoleDto } from './dto/update-role.dto';
 import jwt from 'jsonwebtoken';
 import { JwtService } from '@nestjs/jwt';
-import emailjs from "emailjs-com"
-
+import { Transporter } from 'nodemailer';
+import { createTransport } from 'nodemailer';
+import { MailService } from 'src/mail/mail.service';
+const nodemailer = require("nodemailer")
 import * as dotenv from "dotenv";
-import { HttpService } from '@nestjs/axios/dist';
-const XMLHttpRequest = require('xhr2');
-const xhr = new XMLHttpRequest();
 
 dotenv.config({ path: '.env' });
+
+
 
 
 @Injectable()
@@ -35,10 +36,14 @@ export class UsersService {
     @InjectRepository(Users)
     private userRepository: Repository<Users>,
     @InjectRepository(Role)
-    private roleRepository: Repository<Role>,private jwtService : JwtService,
-    private httpService : HttpService
+    private roleRepository: Repository<Role>,
+    private jwtService: JwtService,
+    // private mailService: MailService
+    // private transporter: Transporter
   ) {}
   // Ajout constructor pour interagir avec la table role
+
+
 
   async create(createUserDto: CreateUserDto): Promise<Users> {
     try {
@@ -93,29 +98,47 @@ export class UsersService {
   }
 
   async findOneByEmail(email: string) {
+
     const userFound = await this.userRepository.findOneBy({ email: email });
     let token;
-   
-//     console.log(process.env.SECRET_KEY_RESET
-// )
+    const transporter = createTransport({
+      // Informations du compte Sendgrid
+      host: process.env.MAIL_HOST,
+      port: Number(process.env.MAIL_PORT),
+      auth: {
+        user: process.env.MAIL_USER
+,
+        pass: process.env.MAIL_PASSWORD,
+      },
+    });
+
     if (!userFound) {
-      throw new NotFoundException(`Pas d'utilisateurs cet email : ${email}`);  
+      throw new NotFoundException(`Pas d'utilisateurs cet email : ${email}`);
     }
     try {
-       token = this.jwtService.sign(
-      { email: userFound.email, id: userFound.id},
-
-    );
- 
+      token = this.jwtService.sign({
+        email: userFound.email,
+        id: userFound.id,
+      });
     } catch (error) {
-      console.log("error du catch",error)
+      console.log('error du catch', error);
     }
-    // Mail avec token en query param
-return token
-};
+   
+const url = `http://localhost:3000/resetpass?token=${token}`;
 
 
-  
+    const mailOptions = {
+      from: process.env.MAIL_FROM,
+      to: userFound.email,
+      subject: 'Réinitialisation de ton mot de passe',
+      text: `Salut ${userFound.firstname},
+       clique sur ce lien pour réinitialiser ton mot de passe  ${url} `,
+    };
+    return await transporter.sendMail(mailOptions);
+    return token;
+  }
+
+ 
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<Users> {
     const userUpdate = await this.findOne(id);
@@ -170,9 +193,19 @@ return token
     return await this.userRepository.save(userUpdate);
   }
 
-  async updateForgottedPassword(newPasswordDto : NewPasswordDto){
-    
-return "mot de passe reinitialisé"
+  async updateForgottedPassword(newPasswordDto: NewPasswordDto, id: string) {
+    const userUpdate = await this.findOne(id);
+    console.log('utilisateur trouvé', userUpdate);
+    if (newPasswordDto !== undefined) {
+      const saltOrRounds = 10;
+const password = newPasswordDto.password;
+console.log('password: ', password);
+
+const hash = await bcrypt.hash(password, saltOrRounds);
+console.log('hash: ', hash);
+userUpdate.password = hash;
+    }
+    return await this.userRepository.save(userUpdate);
   }
 
   // update role by admin

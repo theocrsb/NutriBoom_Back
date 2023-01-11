@@ -1,3 +1,4 @@
+import  jwt_decoded  from 'jwt-decode';
 import { JwtService } from '@nestjs/jwt';
 import { NewPasswordDto } from './dto/new-password-user.dto';
 import {
@@ -22,6 +23,11 @@ import { VerifUserDto } from './dto/verif-user.dto';
 import * as dotenv from  "dotenv"
 dotenv.config({ path: '.env' });
 
+
+export interface TokenDecoded{
+email: string;
+id:string;
+}
 
 @Controller('users')
 export class UsersController {
@@ -49,7 +55,7 @@ export class UsersController {
     }
   }
 @Post ('/reset/password')
-  verif(@Body() verifUserDto: VerifUserDto, ){
+  findOneByEmail(@Body() verifUserDto: VerifUserDto, ){
     if (verifUserDto.email){
       return this.usersService.findOneByEmail(verifUserDto.email)
     }
@@ -94,8 +100,18 @@ export class UsersController {
   updateForgottedPassword(
     @Body() newPasswordDto: NewPasswordDto
   ) {
-    this.jwtService.verify(newPasswordDto.token)
-    return this.usersService.updateForgottedPassword(newPasswordDto);
+    try {
+      this.jwtService.verify(newPasswordDto.token);
+const tokenDecoded: TokenDecoded = jwt_decoded(newPasswordDto.token);
+console.log('le token décode', tokenDecoded.id);
+return this.usersService.updateForgottedPassword(
+  newPasswordDto,
+  tokenDecoded.id,
+)
+    } catch (error) {
+      console.log("erreur forgotted password",error)
+      return error
+    }
   }
 
   //USER avec GetUser
