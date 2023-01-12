@@ -19,24 +19,23 @@ export class UpdateUserDto {
   //AJOUT DES TRIM DANS LE FRONT POUR GESTION DES ESPACES
   //
   @IsOptional()
-  @IsString()
   @IsNotEmpty()
-  @Matches(/^[A-Za-zÀ-ÿ]+[A-Za-zÀ-ÿ ]*$/, {
-    message: 'Please enter letters without spaces at the beginning',
+  @Matches(/^[A-Za-z]*$/, {
+    message: "*Le nom ne doit pas contenir d'espace",
   })
   @MinLength(1, {
-    message: ' Please enter at least 1 characters ',
+    message: ' *Le nom doit contenir au moins un caractère ',
   })
   lastname: string;
   //
   @IsOptional()
   @IsString()
   @IsNotEmpty()
-  @Matches(/^[A-Za-zÀ-ÿ]+[A-Za-zÀ-ÿ ]*$/, {
-    message: 'Please enter letters without spaces at the beginning',
+  @Matches(/^[A-Za-z]*$/, {
+    message: "*Le prénom ne doit pas contenir d'espace",
   })
   @MinLength(2, {
-    message: ' Please enter at least 2 characters ',
+    message: ' *Le prénom doit contenir au moins deux caractères',
   })
   firstname: string;
   //
@@ -51,10 +50,10 @@ export class UpdateUserDto {
   @IsOptional()
   @IsString()
   @MaxLength(5, {
-    message: ' Please enter a maximum of 5 characters ',
+    message: '*Tu ne peux rentrer plus de 5 caractères ',
   })
   @MinLength(5, {
-    message: ' Please enter at least 5 characters ',
+    message: ' *Tu dois rentrer au moins 5 caractères ',
   })
   gender: string;
   //
@@ -81,7 +80,12 @@ export class UpdateUserDto {
   //
 
   @IsOptional()
-  @IsEmail()
+  @IsEmail(
+    {},
+    {
+      message: "Format d'email invalide",
+    },
+  )
   @IsString()
   email: string;
   //
@@ -89,11 +93,11 @@ export class UpdateUserDto {
   @IsOptional()
   @IsString()
   @MinLength(4, {
-    message: 'Please enter at least 4 characters',
+    message: '*Le mot de passe doit contenir au moins 4 caractères',
   })
-  @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
+  @Matches(/^(?=.[A-Z])(?=.[a-z])(?=.*[0-9])/, {
     message:
-      'password must have 1 lower case letter, 1 upper case letter and 1 number or special character',
+      '*Le mot de passe doit contenir une majuscule, une minuscule et un nombre',
   })
   // @Transform(({ value }: TransformFnParams) => value?.trim())
   password: string;

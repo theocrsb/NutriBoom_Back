@@ -74,9 +74,12 @@ export class CreateUserDto {
   ratio: number;
   //
 
-  @IsEmail({},{
-    message:"Format d'email invalide"
-  },)
+  @IsEmail(
+    {},
+    {
+      message: "Format d'email invalide",
+    },
+  )
   @IsString()
   email: string;
   //

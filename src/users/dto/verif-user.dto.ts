@@ -1,7 +1,11 @@
-import { IsEmail } from "class-validator";
+import { IsEmail } from 'class-validator';
 
-export class VerifUserDto{
-
-@IsEmail()
-email: string
+export class VerifUserDto {
+  @IsEmail(
+    {},
+    {
+      message: "Format d'email invalide",
+    },
+  )
+  email: string;
 }
