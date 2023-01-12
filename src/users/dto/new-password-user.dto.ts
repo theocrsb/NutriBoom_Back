@@ -1,4 +1,4 @@
 export class NewPasswordDto {
-password: string
-token: string
+  password: string;
+  token: string;
 }

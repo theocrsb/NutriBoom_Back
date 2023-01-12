@@ -1,4 +1,4 @@
-import  jwt_decoded  from 'jwt-decode';
+import jwt_decoded from 'jwt-decode';
 import { JwtService } from '@nestjs/jwt';
 import { NewPasswordDto } from './dto/new-password-user.dto';
 import {
@@ -20,18 +20,20 @@ import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from 'src/auth/get-user.decorator';
 import { UpdateRoleDto } from './dto/update-role.dto';
 import { VerifUserDto } from './dto/verif-user.dto';
-import * as dotenv from  "dotenv"
+import * as dotenv from 'dotenv';
 dotenv.config({ path: '.env' });
 
-
-export interface TokenDecoded{
-email: string;
-id:string;
+export interface TokenDecoded {
+  email: string;
+  id: string;
 }
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService, private jwtService :JwtService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private jwtService: JwtService,
+  ) {}
 
   //all persons
   @Post()
@@ -54,13 +56,12 @@ export class UsersController {
       );
     }
   }
-@Post ('/reset/password')
-  findOneByEmail(@Body() verifUserDto: VerifUserDto, ){
-    if (verifUserDto.email){
-      return this.usersService.findOneByEmail(verifUserDto.email)
+  @Post('/reset/password')
+  findOneByEmail(@Body() verifUserDto: VerifUserDto) {
+    if (verifUserDto.email) {
+      return this.usersService.findOneByEmail(verifUserDto.email);
     }
   }
-
 
   //ADMIN
   @Get()
@@ -97,20 +98,18 @@ export class UsersController {
   }
 
   @Patch('/reset/password')
-  updateForgottedPassword(
-    @Body() newPasswordDto: NewPasswordDto
-  ) {
+  updateForgottedPassword(@Body() newPasswordDto: NewPasswordDto) {
     try {
       this.jwtService.verify(newPasswordDto.token);
-const tokenDecoded: TokenDecoded = jwt_decoded(newPasswordDto.token);
-console.log('le token décode', tokenDecoded.id);
-return this.usersService.updateForgottedPassword(
-  newPasswordDto,
-  tokenDecoded.id,
-)
+      const tokenDecoded: TokenDecoded = jwt_decoded(newPasswordDto.token);
+      console.log('le token décode', tokenDecoded.id);
+      return this.usersService.updateForgottedPassword(
+        newPasswordDto,
+        tokenDecoded.id,
+      );
     } catch (error) {
-      console.log("erreur forgotted password",error)
-      return error
+      console.log('erreur forgotted password', error);
+      return error;
     }
   }
 
@@ -120,6 +119,4 @@ return this.usersService.updateForgottedPassword(
   remove(@Param('id') id: string) {
     return this.usersService.remove(id);
   }
-
-  
 }
