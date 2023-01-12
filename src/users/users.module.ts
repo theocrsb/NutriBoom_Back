@@ -17,7 +17,7 @@ import { HttpModule } from '@nestjs/axios';
     HttpModule,
     JwtModule.register({
       secret: process.env.SECRET_KEY_RESET,
-      signOptions: { expiresIn: '1h' },
+      signOptions: { expiresIn: '20m' },
     }),
   ],
   controllers: [UsersController],
