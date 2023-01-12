@@ -39,7 +39,7 @@ export class ActivityController {
   async findAll() {
     return await this.activityService.findAll();
   }
-// FindAll mais pour l'administrateur : sécurise l'accès à la page Admin
+  // FindAll mais pour l'administrateur : sécurise l'accès à la page Admin
   @Get('/admin')
   @UseGuards(AdminGuard)
   async findAllForAdmin() {
