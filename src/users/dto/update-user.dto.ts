@@ -99,7 +99,6 @@ export class UpdateUserDto {
     message:
       '*Le mot de passe doit contenir une majuscule, une minuscule et un nombre',
   })
-  // @Transform(({ value }: TransformFnParams) => value?.trim())
   password: string;
   // //
   @IsOptional()
