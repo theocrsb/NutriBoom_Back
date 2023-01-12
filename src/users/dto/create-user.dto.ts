@@ -74,9 +74,12 @@ export class CreateUserDto {
   ratio: number;
   //
 
-  @IsEmail({},{
-    message:"Format d'email invalide"
-  },)
+  @IsEmail(
+    {},
+    {
+      message: "Format d'email invalide",
+    },
+  )
   @IsString()
   email: string;
   //
@@ -85,7 +88,7 @@ export class CreateUserDto {
   @MinLength(4, {
     message: '*Le mot de passe doit contenir au moins 4 caractères',
   })
-  @Matches(/^(?=.[A-Z])(?=.[a-z])(?=.*[0-9])/, {
+  @Matches(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])/, {
     message:
       '*Le mot de passe doit contenir une majuscule, une minuscule et un nombre',
   })

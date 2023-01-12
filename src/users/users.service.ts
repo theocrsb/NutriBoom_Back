@@ -112,6 +112,7 @@ export class UsersService {
       });
     } catch (error) {
       console.log('error du catch', error);
+      throw new Error('erreur lors de la generation du mail');
     }
 
     const url = `http://localhost:3000/resetpass?token=${token}`;
