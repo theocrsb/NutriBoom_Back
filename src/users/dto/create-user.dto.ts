@@ -21,8 +21,12 @@ export class CreateUserDto {
   //
   //AJOUT DES TRIM DANS LE FRONT POUR GESTION DES ESPACES
   //
-  @IsString()
-  @IsNotEmpty()
+  @IsString({
+    message: ' *le nom doit être une chaine de caractère',
+  })
+  @IsNotEmpty({
+    message: ' *Le nom ne peux pas être vide',
+  })
   @Matches(/^[A-Za-z]*$/, {
     message: "*Le nom ne doit pas contenir d'espace",
   })
@@ -31,8 +35,12 @@ export class CreateUserDto {
   })
   lastname: string;
   //
-  @IsString()
-  @IsNotEmpty()
+  @IsString({
+    message: ' *le prénom doit être une chaine de caractère',
+  })
+  @IsNotEmpty({
+    message: ' *Le prénom ne peux pas être vide',
+  })
   @Matches(/^[A-Za-z]*$/, {
     message: "*Le prénom ne doit pas contenir d'espace",
   })
@@ -92,6 +100,5 @@ export class CreateUserDto {
     message:
       '*Le mot de passe doit contenir une majuscule, une minuscule et un nombre',
   })
-  // @Transform(({ value }: TransformFnParams) => value?.trim())
   password: string;
 }

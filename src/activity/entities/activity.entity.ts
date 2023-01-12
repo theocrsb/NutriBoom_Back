@@ -1,11 +1,5 @@
 import { Exercices } from 'src/exercices/entities/exercice.entity';
-import {
-  Column,
-  Entity,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Activity {
@@ -33,9 +27,9 @@ export class Activity {
   })
   validate: boolean;
 
-  // Ajout relation onetomany avec la table Users
+  // Ajout relation OneToMany avec la table Users
   @OneToMany(() => Exercices, (exercices) => exercices.activity, {
     eager: false,
   })
-  exercices: Exercices[];
+  exercices!: Exercices[];
 }

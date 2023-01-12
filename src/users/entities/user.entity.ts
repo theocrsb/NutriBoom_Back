@@ -5,7 +5,6 @@ import { Role } from 'src/role/entities/role.entity';
 import {
   Column,
   Entity,
-  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -81,7 +80,8 @@ export class Users {
   })
   password: string;
 
-  // Ajout onDelete CASCADE pour les pb de contraintes
+  // Ajout onDelete CASCADE pour les problèmes de contraintes.
+  // ! = ne peux pas etre undefined
   @OneToMany(() => Exercices, (exercices) => exercices.users, {
     eager: true,
     onDelete: 'CASCADE',
