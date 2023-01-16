@@ -6,6 +6,5 @@ export class CreateExerciceDto {
   id?: number;
   activity: Activity;
   users?: Users;
-  @IsNumber()
   time: number;
 }

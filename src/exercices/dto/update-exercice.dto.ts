@@ -4,6 +4,5 @@ import { Users } from 'src/users/entities/user.entity';
 
 export class UpdateExerciceDto {
   activity: Activity;
-  @IsNumber()
   time: number;
 }
