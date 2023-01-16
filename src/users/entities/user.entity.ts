@@ -88,8 +88,9 @@ export class Users {
   })
   exercices!: Exercices[];
 
+  // ! = ne peux pas etre undefined
   @ManyToOne(() => Role, (role) => role.users, { eager: true })
-  role: Role;
+  role!: Role;
 
   @OneToMany(() => EatenFood, (eatenfood) => eatenfood.users, {
     eager: true,
