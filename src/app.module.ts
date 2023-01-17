@@ -28,17 +28,14 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { join } from 'path';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 
-
-
-
-
 dotenv.config({ path: '.env' });
 
 @Module({
-  imports: [ConfigModule.forRoot({
+  imports: [
+    ConfigModule.forRoot({
       isGlobal: true, // no need to import into other modules
     }),
-  TypeOrmModule.forRoot({
+    TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST,
       port: Number(process.env.DB_PORT),
@@ -68,8 +65,6 @@ dotenv.config({ path: '.env' });
     AuthModule,
     PassportModule,
     MailtoModule,
-    
-    
   ],
   controllers: [AuthController],
   providers: [AppService],
