@@ -20,7 +20,7 @@ async function bootstrap() {
   // deploy : http://api-nutriboom.dev-formation.fr
   app.setGlobalPrefix('api');
   // changement du port 3000 avec le port 8080
-  app.enableCors();
+  app.enableCors({ origin: 'http://nutriboom.dev-formation.fr' });
   //ajout CORS
 
   //8083 pour le deploy

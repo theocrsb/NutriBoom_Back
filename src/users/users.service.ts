@@ -115,7 +115,9 @@ export class UsersService {
       throw new Error('erreur lors de la generation du mail');
     }
 
-    const url = `http://localhost:3000/resetpass?token=${token}`;
+    // const url = `http://localhost:3000/resetpass?token=${token}`;
+    // URL en ligne
+    const url = `http://nutriboom.dev-formation.fr/resetpass?token=${token}`;
 
     const mailOptions = {
       from: process.env.MAIL_FROM,
